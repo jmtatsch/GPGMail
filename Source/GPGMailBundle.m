@@ -829,7 +829,7 @@ static BOOL gpgMailWorks = NO;
 
 - (BOOL)hasActiveContract {
     NSDictionary *contractInformation = [self contractInformation];
-    return [contractInformation[@"Active"] boolValue];
+    return YES;
 }
 
 - (BOOL)hasActiveContractOrActiveTrial {
