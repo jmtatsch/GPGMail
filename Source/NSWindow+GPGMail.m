@@ -1,7 +1,7 @@
 /* NSWindow+GPGMail.m created by Lukas Pitschl (@lukele) on Mon 27-Feb-2012 */
 
 /*
- * Copyright (c) 2000-2011, GPGTools Project Team <gpgtools-devel@lists.gpgtools.org>
+ * Copyright (c) 2000-2011, GPGToolz Project Team <gpgtoolz-devel@lists.gpgtoolz.org>
  * All rights reserved.
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -11,14 +11,14 @@
  *     * Redistributions in binary form must reproduce the above copyright
  *       notice, this list of conditions and the following disclaimer in the
  *       documentation and/or other materials provided with the distribution.
- *     * Neither the name of GPGTools Project Team nor the names of GPGMail
+ *     * Neither the name of GPGToolz Project Team nor the names of GPGMail
  *       contributors may be used to endorse or promote products
  *       derived from this software without specific prior written permission.
  *
- * THIS SOFTWARE IS PROVIDED BY THE GPGTools Project Team ``AS IS'' AND ANY
+ * THIS SOFTWARE IS PROVIDED BY THE GPGToolz Project Team ``AS IS'' AND ANY
  * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE GPGTools Project Team BE LIABLE FOR ANY
+ * DISCLAIMED. IN NO EVENT SHALL THE GPGToolz Project Team BE LIABLE FOR ANY
  * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
  * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
  * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
@@ -29,7 +29,7 @@
 
 #import "CCLog.h"
 #import "GPGMailBundle.h"
-#import "MailDocumentEditor.h"
+//#import "MailDocumentEditor.h"
 #import "MailDocumentEditor+GPGMail.h"
 #import "NSWindow+GPGMail.h"
 
@@ -76,12 +76,13 @@
 - (void)MAToggleFullScreen:(id)sender {
     // Loop through all document editors and remove the security method
     // accessory view, so there's no animation glitch.
-    DebugLog(@"Toggle fullscreen: remove security method accessory view");
-    for(MailDocumentEditor *editor in [NSClassFromString(@"MailDocumentEditor") documentEditors]) {
-        if(editor.isModal)
-            [((MailDocumentEditor_GPGMail *)editor) hideSecurityMethodAccessoryView];
-    }
-    [self MAToggleFullScreen:sender];
+    // TODO: Figure out if this is still called, and if so, what we should be doing here in Sierra!
+//    DebugLog(@"Toggle fullscreen: remove security method accessory view");
+//    for(MailDocumentEditor *editor in [NSClassFromString(@"MailDocumentEditor") documentEditors]) {
+//        if(editor.isModal)
+//            [((MailDocumentEditor_GPGMail *)editor) hideSecurityMethodAccessoryView];
+//    }
+//    [self MAToggleFullScreen:sender];
 }
 
 @end

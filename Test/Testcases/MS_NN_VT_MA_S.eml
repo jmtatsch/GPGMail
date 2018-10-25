@@ -1,9 +1,9 @@
-Message-ID: <4E44670C.50905@gpgtools.org>
+Message-ID: <4E44670C.50905@gpgtoolz.org>
 Date: Fri, 12 Aug 2011 01:34:36 +0200
-From: GPGTools Test Key <test@gpgtools.org>
+From: GPGToolz Test Key <test@gpgtoolz.org>
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.7; rv:5.0) Gecko/20110624 Thunderbird/5.0
 MIME-Version: 1.0
-To: test@gpgtools.org
+To: test@gpgtoolz.org
 Subject: MS/NN/VT/MA/S
 X-Enigmail-Version: 1.2
 Content-Type: multipart/signed; micalg=pgp-sha1;
@@ -96,7 +96,7 @@ Content-Disposition: attachment; filename="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG/MacGPG2 v2.0.17 (Darwin)
-Comment: GPGTools - http://gpgtools.org
+Comment: GPGToolz - http://gpgtoolz.org
 Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
 
 iQEcBAEBAgAGBQJORGcNAAoJEFJrCfEKo9qCO7sIAI3oPss4EwSNdlHzwF1eWx91

@@ -29,8 +29,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "1B46CFCB161555DF00CF9C5F"
-               BuildableName = "org.gpgtools.Libmacgpg.xpc"
-               BlueprintName = "org.gpgtools.Libmacgpg.xpc"
+               BuildableName = "org.gpgtoolz.Libmacgpg.xpc"
+               BlueprintName = "org.gpgtoolz.Libmacgpg.xpc"
                ReferencedContainer = "container:Dependencies/Libmacgpg/Libmacgpg.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>

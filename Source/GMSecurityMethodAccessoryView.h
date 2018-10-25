@@ -1,7 +1,7 @@
 /* GMSecurityMethodAccessoryView.m created by Lukas Pitschl (@lukele) on Thu 01-Mar-2012 */
 
 /*
- * Copyright (c) 2000-2012, GPGTools Project Team <gpgtools-devel@lists.gpgtools.org>
+ * Copyright (c) 2000-2012, GPGToolz Project Team <gpgtoolz-devel@lists.gpgtoolz.org>
  * All rights reserved.
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -11,14 +11,14 @@
  *     * Redistributions in binary form must reproduce the above copyright
  *       notice, this list of conditions and the following disclaimer in the
  *       documentation and/or other materials provided with the distribution.
- *     * Neither the name of GPGTools Project Team nor the names of GPGMail
+ *     * Neither the name of GPGToolz Project Team nor the names of GPGMail
  *       contributors may be used to endorse or promote products
  *       derived from this software without specific prior written permission.
  *
- * THIS SOFTWARE IS PROVIDED BY THE GPGTools Project Team ``AS IS'' AND ANY
+ * THIS SOFTWARE IS PROVIDED BY THE GPGToolz Project Team ``AS IS'' AND ANY
  * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE GPGTools Project Team BE LIABLE FOR ANY
+ * DISCLAIMED. IN NO EVENT SHALL THE GPGToolz Project Team BE LIABLE FOR ANY
  * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
  * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
  * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
@@ -52,6 +52,7 @@ typedef NS_ENUM(NSInteger, GMSecurityMethodAccessoryViewStyle) {
     BOOL _fullscreen;
     BOOL _active;
     GPGMAIL_SECURITY_METHOD _securityMethod;
+    GPGMAIL_SECURITY_METHOD _previousSecurityMethod;
 	GMSecurityMethodAccessoryViewStyle _style;
 	
     id <GMSecurityMethodAccessoryViewDelegate> __weak _delegate;
@@ -64,12 +65,14 @@ typedef NS_ENUM(NSInteger, GMSecurityMethodAccessoryViewStyle) {
 }
 
 @property (nonatomic, assign) GPGMAIL_SECURITY_METHOD securityMethod;
+@property (nonatomic, assign) GPGMAIL_SECURITY_METHOD previousSecurityMethod;
 @property (nonatomic, assign) BOOL active;
 @property (nonatomic, weak) id <GMSecurityMethodAccessoryViewDelegate> delegate;
 @property (nonatomic, assign) GMSecurityMethodAccessoryViewStyle style;
 
 - (id)init;
 - (id)initWithStyle:(GMSecurityMethodAccessoryViewStyle)style;
+- (id)initWithStyle:(GMSecurityMethodAccessoryViewStyle)style size:(NSSize)size;
 
 /**
  Configures the popup menu with the given security methods.

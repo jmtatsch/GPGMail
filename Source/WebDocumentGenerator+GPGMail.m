@@ -1,7 +1,7 @@
 /* CertificateBannerViewController+GPGMail.m created by Lukas Pitschl (@lukele) on Thu 17-Oct-2013 */
 
 /*
- * Copyright (c) 2000-2013, GPGTools Team <team@gpgtools.org>
+ * Copyright (c) 2000-2013, GPGToolz Team <team@gpgtoolz.org>
  * All rights reserved.
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -11,14 +11,14 @@
  *     * Redistributions in binary form must reproduce the above copyright
  *       notice, this list of conditions and the following disclaimer in the
  *       documentation and/or other materials provided with the distribution.
- *     * Neither the name of GPGTools nor the names of GPGMail
+ *     * Neither the name of GPGToolz nor the names of GPGMail
  *       contributors may be used to endorse or promote products
  *       derived from this software without specific prior written permission.
  *
- * THIS SOFTWARE IS PROVIDED BY THE GPGTools Team ``AS IS'' AND ANY
+ * THIS SOFTWARE IS PROVIDED BY THE GPGToolz Team ``AS IS'' AND ANY
  * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE GPGTools Team BE LIABLE FOR ANY
+ * DISCLAIMED. IN NO EVENT SHALL THE GPGToolz Team BE LIABLE FOR ANY
  * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
  * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
  * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
@@ -35,20 +35,36 @@
 #import "ConversationMember+GPGMail.h"
 #import "NSObject+LPDynamicIvars.h"
 
+#import "GMMessageSecurityFeatures.h"
+#import "Message+GPGMail.h"
+
 @implementation WebDocumentGenerator_GPGMail
 
 - (void)MASetWebDocument:(MUIWebDocument *)webDocument {
-	/* On Yosemite, the message selector no longer exists, but is encapsulated in a conversation member object. */
+    /* On Yosemite, the message selector no longer exists, but is encapsulated in a conversation member object. */
     MCMessage *message = nil;
     if([self respondsToSelector:@selector(message)])
         message = (MCMessage *)[(id)self message];
     else if([GPGMailBundle isYosemite]) {
         message = [(ConversationMember *)[(WebDocumentGenerator *)self valueForKey:@"_conversationMember"] originalMessage];
     }
-    id error = [message getIvar:@"PGPMainError"];
-	if(error)
-		[webDocument setParseError:error];
-	[self MASetWebDocument:webDocument];
+    // Re-Implement using security features.
+    NSError *error = [[(Message_GPGMail *)message securityFeatures] PGPMainError];
+    if(error) {
+        [error setIvar:@"ParseErrorIsPGPError" value:@(YES)];
+        [webDocument setSmimeError:error];
+    }
+    if([(Message_GPGMail *)message securityFeatures]) {
+        [webDocument setIvar:@"GMMessageSecurityFeatures" value:[(Message_GPGMail *)message securityFeatures]];
+        if([(Message_GPGMail *)message securityFeatures].PGPEncrypted) {
+            [webDocument setIsEncrypted:YES];
+        }
+    }
+    [self MASetWebDocument:webDocument];
 }
+
+//- (void)MAAsyncLoadAllowingRemoteFetch:(BOOL)arg1 completionHandler:(CDUnknownBlockType)arg2 {
+//    [self MAAsyncLoadAllowingRemoteFetch:arg1 completionHandler:arg2];
+//}
 
 @end

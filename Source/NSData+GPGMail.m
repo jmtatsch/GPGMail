@@ -1,7 +1,7 @@
 /* NSData+GPGMail.h created by Lukas Pitschl (@lukele) on Wed 24-Aug-2011 */
 
 /*
- * Copyright (c) 2000-2011, GPGTools Project Team <gpgtools-devel@lists.gpgtools.org>
+ * Copyright (c) 2000-2011, GPGToolz Project Team <gpgtoolz-devel@lists.gpgtoolz.org>
  * All rights reserved.
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -11,14 +11,14 @@
  *     * Redistributions in binary form must reproduce the above copyright
  *       notice, this list of conditions and the following disclaimer in the
  *       documentation and/or other materials provided with the distribution.
- *     * Neither the name of GPGTools Project Team nor the names of GPGMail
+ *     * Neither the name of GPGToolz Project Team nor the names of GPGMail
  *       contributors may be used to endorse or promote products
  *       derived from this software without specific prior written permission.
  *
- * THIS SOFTWARE IS PROVIDED BY THE GPGTools Project Team ``AS IS'' AND ANY
+ * THIS SOFTWARE IS PROVIDED BY THE GPGToolz Project Team ``AS IS'' AND ANY
  * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE GPGTools Project Team BE LIABLE FOR ANY
+ * DISCLAIMED. IN NO EVENT SHALL THE GPGToolz Project Team BE LIABLE FOR ANY
  * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
  * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
  * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
@@ -30,9 +30,9 @@
 #define restrict
 #import <RegexKit/RegexKit.h>
 #import <Libmacgpg/Libmacgpg.h>
-#import <NSString-NSStringUtils.h>
+//#import <NSString-NSStringUtils.h>
 #import "NSData+GPGMail.h"
-#import "NSData-MessageAdditions.h"
+#import "NSData-MailCoreAdditions.h"
 
 @implementation NSData (GPGMail)
 
@@ -41,7 +41,7 @@
         return @"";
     
     // Attempt to convert with hint encoding.
-    NSString *string = [NSString stringWithData:self encoding:encoding];
+    NSString *string = [[NSString alloc] initWithData:self encoding:encoding];
     if(![string length])
         return [self stringByGuessingEncoding];
     
@@ -63,7 +63,7 @@
         NSASCIIStringEncoding};
 
     for(int i = 0; i < items; i++) {
-        retString = [NSString stringWithData:self encoding:encodings[i]];
+        retString = [[NSString alloc] initWithData:self encoding:encodings[i]];
         if([retString length] > 0)
             return retString;
         
@@ -81,6 +81,8 @@
     NSString *signatureRegex = [NSString stringWithFormat:@"(?sm)(^%@\\r?\\n(.*?)\\r?\n%@)",
                                 PGP_SIGNED_MESSAGE_BEGIN, PGP_MESSAGE_SIGNATURE_END];
     NSRange match = NSMakeRange(NSNotFound, 0);
+    if([self length] == 0)
+        return match;
     @try {
 		RKRegex *sigRKRegex = [RKRegex regexWithRegexString:signatureRegex options:RKCompileNoOptions];
 		match = [self rangeOfRegex:sigRKRegex inRange:range capture:0];
@@ -96,6 +98,8 @@
     NSString *signatureRegex = [NSString stringWithFormat:@"(?sm)(%@.*?%@)", 
                                 PGP_MESSAGE_SIGNATURE_BEGIN, PGP_MESSAGE_SIGNATURE_END];
     NSRange match = NSMakeRange(NSNotFound, 0);
+    if([self length] == 0)
+        return match;
     @try {
 		RKRegex *sigRKRegex = [RKRegex regexWithRegexString:signatureRegex options:RKCompileNoOptions];
 		match = [self rangeOfRegex:sigRKRegex];
@@ -146,6 +150,8 @@
     NSString *signatureRegex = [NSString stringWithFormat:@"(?sm)(%@.*?%@)",
                                 PGP_MESSAGE_PUBLIC_KEY_BEGIN, PGP_MESSAGE_PUBLIC_KEY_END];
     NSRange match = NSMakeRange(NSNotFound, 0);
+    if([self length] == 0)
+        return match;
     @try {
 		RKRegex *sigRKRegex = [RKRegex regexWithRegexString:signatureRegex options:RKCompileNoOptions];
 		match = [self rangeOfRegex:sigRKRegex];
@@ -170,6 +176,25 @@
     
     return isMatched;
 }
+
+- (BOOL)containsPGPVersionString:(NSString *)version {
+    // While -[NSData containsPGPVersionMarker:] is used to check if the
+    // PGP/MIME application/pgp-encrypted version part contains Version: 1
+    // this method is used to check if the PGP BEGIN marker contains the version
+    // string given.
+    NSString *versionRegex = [NSString stringWithFormat:@"(?smi)(version[ ]?: %@)", version];
+    BOOL isMatched = NO;
+    @try {
+        RKRegex *versionRKRegex = [RKRegex regexWithRegexString:versionRegex options:RKCompileNoOptions];
+        isMatched = [self isMatchedByRegex:versionRKRegex];
+    }
+    @catch (NSException *exception) {
+        // Ignore...
+    }
+
+    return isMatched;
+}
+
 
 - (BOOL)hasSignaturePacketsWithSignaturePacketsExpected:(BOOL)signaturePacketsExpected {
     NSData *packetData = [self copy];
@@ -197,6 +222,84 @@
     }
     
     return hasSignature;
+}
+
+- (BOOL)hasPGPSignatureDataPackets {
+    return [self hasSignaturePacketsWithSignaturePacketsExpected:NO];
+}
+
+- (BOOL)hasPGPEncryptionDataPackets {
+    NSData *packetData = [self copy];
+    NSArray *packets = nil;
+    @try {
+        packets = [GPGPacket packetsWithData:packetData];
+    }
+    @catch(NSException *exception) {
+        return NO;
+    }
+
+    if(![packets count]) {
+        return NO;
+    }
+
+    BOOL hasEncryptedData = NO;
+
+    for(GPGPacket *packet in packets) {
+        switch(packet.tag) {
+            case GPGPublicKeyEncryptedSessionKeyPacketTag:
+            case GPGSymmetricEncryptedSessionKeyPacketTag:
+                hasEncryptedData = YES;
+                break;
+
+            default:
+                hasEncryptedData = NO;
+                break;
+        }
+        if(hasEncryptedData) {
+            break;
+        }
+    }
+
+    return hasEncryptedData;
+}
+
+- (BOOL)containsPGPKeyPackets {
+    NSData *packetData = [self copy];
+
+    NSArray *packets = nil;
+    @try {
+        packets = [GPGPacket packetsWithData:packetData];
+    }
+    @catch (NSException *exception) {
+        return NO;
+    }
+
+    // Parsing packets failed due to unsupported packets.
+    if(![packets count]) {
+        return NO;
+    }
+
+    BOOL hasPGPKey = NO;
+
+    for(GPGPacket *packet in packets) {
+        switch(packet.tag) {
+            case GPGPublicKeyPacketTag:
+            case GPGSecretKeyPacketTag:
+            case GPGPublicSubkeyPacketTag:
+            case GPGSecretSubkeyPacketTag:
+                hasPGPKey = YES;
+                break;
+
+            default:
+                hasPGPKey = NO;
+                break;
+        }
+        if(hasPGPKey) {
+            break;
+        }
+    }
+
+    return hasPGPKey;
 }
 
 - (NSData *)dataPreparedForVerification {

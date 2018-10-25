@@ -1,7 +1,7 @@
 /* GPGMailPreferences.m created by dave on Thu 29-Jun-2000 */
 
 /*
- * Copyright (c) 2000-2011, GPGTools Project Team <gpgtools-devel@lists.gpgtools.org>
+ * Copyright (c) 2000-2011, GPGToolz Project Team <gpgtoolz-devel@lists.gpgtoolz.org>
  * All rights reserved.
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -11,14 +11,14 @@
  *     * Redistributions in binary form must reproduce the above copyright
  *       notice, this list of conditions and the following disclaimer in the
  *       documentation and/or other materials provided with the distribution.
- *     * Neither the name of GPGTools Project Team nor the names of GPGMail
+ *     * Neither the name of GPGToolz Project Team nor the names of GPGMail
  *       contributors may be used to endorse or promote products
  *       derived from this software without specific prior written permission.
  *
- * THIS SOFTWARE IS PROVIDED BY THE GPGTools Project Team ``AS IS'' AND ANY
+ * THIS SOFTWARE IS PROVIDED BY THE GPGToolz Project Team ``AS IS'' AND ANY
  * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE GPGTools Project Team BE LIABLE FOR ANY
+ * DISCLAIMED. IN NO EVENT SHALL THE GPGToolz Project Team BE LIABLE FOR ANY
  * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
  * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
  * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
@@ -29,23 +29,42 @@
 
 #import "GPGMailPreferences.h"
 #import "GPGMailBundle.h"
-#import "MailAccount.h"
-#import "ExchangeAccount.h"
+
 #import <pwd.h>
 
+#import "MFMailAccount.h"
+#import "MFRemoteStoreAccount.h"
+#import "MailApp.h"
 
 #define localized(key) [GPGMailBundle localizedStringForKey:key]
 
 NSString *SUEnableAutomaticChecksKey = @"SUEnableAutomaticChecks";
 NSString *SUScheduledCheckIntervalKey = @"SUScheduledCheckInterval";
 
+@interface GPGMailPreferences ()
+
+@property (nonatomic, weak) IBOutlet NSTextField *registrationDescriptionTextField;
+@property (nonatomic, weak) IBOutlet NSTextField *activationCodeTextField;
+@property (nonatomic, weak) IBOutlet NSButton *activateButton;
+@property (nonatomic, weak) IBOutlet NSButton *learnMoreButton;
+@property (nonatomic, weak) IBOutlet NSButton *reportProblemButton;
+@property (nonatomic, assign) BOOL preferencesDidLoad;
+
+@end
 
 @implementation GPGMailPreferences
+
+- (id)init {
+    if((self = [super init])) {
+        _preferencesDidLoad = NO;
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateSupportPlanSection:) name:@"GMSupportPlanStateChangeNotification" object:nil];
+    }
+    return self;
+}
 
 - (GPGMailBundle *)bundle {
 	return [GPGMailBundle sharedInstance];
 }
-
 
 - (NSString *)copyright {
 	return [[GPGMailBundle bundle] infoDictionary][@"NSHumanReadableCopyright"];
@@ -64,12 +83,12 @@ NSString *SUScheduledCheckIntervalKey = @"SUScheduledCheckInterval";
 	[pStyle setAlignment:NSRightTextAlignment];
 
 	NSDictionary *attributes = @{NSParagraphStyleAttributeName: pStyle,
-								NSLinkAttributeName: @"http://www.gpgtools.org/",
+								NSLinkAttributeName: @"https://gpgtoolz.org/",
 								NSForegroundColorAttributeName: [NSColor blueColor],
 								NSFontAttributeName: [NSFont fontWithName:@"Lucida Grande" size:9],
 								NSUnderlineStyleAttributeName: @1};
 
-	return [[NSAttributedString alloc] initWithString:@"http://www.gpgtools.org" attributes:attributes];
+	return [[NSAttributedString alloc] initWithString:@"https://gpgtoolz.org" attributes:attributes];
 }	
 
 
@@ -83,6 +102,33 @@ NSString *SUScheduledCheckIntervalKey = @"SUScheduledCheckInterval";
 	
 	return [[NSAttributedString alloc] initWithString:string attributes:attributes];
 }
+
+- (void)updateSupportPlanSection:(NSNotification *)notification {
+    [self setState:GPGMailPreferencesSupportPlanStateActiveState];
+}
+
+- (NSString *)registrationCode {
+	if([[GPGMailBundle sharedInstance] hasActiveContract]) {
+		return @"Code: N/A";
+	}
+	return @"";
+}
+- (NSString *)registrationDescription {
+    if([[GPGMailBundle sharedInstance] hasActiveContract]) {
+        return @"Registered to: Open Source User";
+    }
+    NSNumber *remainingDays = [[self bundle] remainingTrialDays];
+    return [NSString stringWithFormat:@"Trial Version%@", [remainingDays integerValue] <= 0 ? @" Expired" : [NSString stringWithFormat:@" (%@ days remaining)", remainingDays]];
+}
+
+- (IBAction)activateSupportPlan:(NSButton *)sender {
+	[[GPGMailBundle sharedInstance] startSupportContractWizard];
+}
+- (IBAction)learnMore:(NSButton *)sender {
+	[[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"https://gpgtoolz.org/buy-support-plan"]];
+}
+
+
 
 
 - (NSImage *)imageForPreferenceNamed:(NSString *)aName {
@@ -112,25 +158,44 @@ NSString *SUScheduledCheckIntervalKey = @"SUScheduledCheckInterval";
 	
 	if (!success) {
 		// Alternative if GPGPreferences could not be launched.
-		[[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"https://gpgtools.tenderapp.com/"]];
+		[[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"https://gpgtoolz.tenderapp.com/"]];
 	}
 }
 - (IBAction)openDonate:(id)sender {
-    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"https://gpgtools.org/donate"]];
+    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"https://gpgtoolz.org/donate"]];
 }
 - (IBAction)openKnowledgeBase:(id)sender {
-    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"https://gpgtools.tenderapp.com/kb"]];
+    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"https://gpgtoolz.tenderapp.com/kb"]];
 }
 
 
 
 - (IBAction)openGPGStatusHelp:(id)sender {
-    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"https://gpgtools.tenderapp.com/kb/how-to/gpg-status"]];
+    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"https://gpgtoolz.tenderapp.com/kb/how-to/gpg-status"]];
 }
 
 
 - (void)willBeDisplayed {
-	[[GPGMailBundle sharedInstance] checkGPG];
+    if([[GPGMailBundle sharedInstance] hasActiveContract]) {
+        [self setState:GPGMailPreferencesSupportPlanStateActiveState];
+    }
+    else {
+        [self setState:GPGMailPreferencesSupportPlanStateTrialState];
+    }
+}
+
+- (void)setState:(GPGMailPreferencesSupportPlanState)state {
+    if (_state != state) {
+        _state = state;
+        
+        _activationCodeTextField.hidden = (state == GPGMailPreferencesSupportPlanStateTrialState);
+        _reportProblemButton.hidden = (state == GPGMailPreferencesSupportPlanStateTrialState);
+        _activateButton.hidden = (state == GPGMailPreferencesSupportPlanStateActiveState);
+        _learnMoreButton.hidden = (state == GPGMailPreferencesSupportPlanStateActiveState);
+        _activationCodeTextField.stringValue = [self registrationCode];
+        _registrationDescriptionTextField.hidden = NO;
+        _registrationDescriptionTextField.stringValue = [self registrationDescription];
+    }
 }
 
 - (NSImage *)gpgStatusImage {
@@ -187,14 +252,13 @@ NSString *SUScheduledCheckIntervalKey = @"SUScheduledCheckInterval";
 	return NO;
 }
 
-
 - (BOOL)validateEncryptDrafts:(NSNumber **)value error:(NSError **)error {
 	if ([*value boolValue] == NO) {
-		NSArray *accounts = (NSArray *)[GM_MAIL_CLASS(@"MailAccount") allMailAccounts];
+		NSArray *accounts = (NSArray *)[MFMailAccount mailAccounts];
 		for (id account in accounts) {
 			if ([account respondsToSelector:@selector(storeDraftsOnServer)] && [account storeDraftsOnServer]) {
 				
-				NSWindow *window = [[NSPreferences sharedPreferences] valueForKey:@"_preferencesPanel"];
+                NSWindow *window = [[(MailApp *)[NSClassFromString(@"MailApp") sharedApplication] preferencesController] window];
 				
 				if (floor(NSAppKitVersionNumber) >= NSAppKitVersionNumber10_9) {
 					NSAlert *unencryptedReplyAlert = [NSAlert new];

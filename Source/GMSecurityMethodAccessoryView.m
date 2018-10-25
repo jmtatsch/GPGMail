@@ -1,7 +1,7 @@
 /* GMSecurityMethodAccessoryView.m created by Lukas Pitschl (@lukele) on Thu 01-Mar-2012 */
 
 /*
- * Copyright (c) 2000-2011, GPGTools Project Team <gpgtools-devel@lists.gpgtools.org>
+ * Copyright (c) 2000-2011, GPGToolz Project Team <gpgtoolz-devel@lists.gpgtoolz.org>
  * All rights reserved.
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -11,14 +11,14 @@
  *     * Redistributions in binary form must reproduce the above copyright
  *       notice, this list of conditions and the following disclaimer in the
  *       documentation and/or other materials provided with the distribution.
- *     * Neither the name of GPGTools Project Team nor the names of GPGMail
+ *     * Neither the name of GPGToolz Project Team nor the names of GPGMail
  *       contributors may be used to endorse or promote products
  *       derived from this software without specific prior written permission.
  *
- * THIS SOFTWARE IS PROVIDED BY THE GPGTools Project Team ``AS IS'' AND ANY
+ * THIS SOFTWARE IS PROVIDED BY THE GPGToolz Project Team ``AS IS'' AND ANY
  * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE GPGTools Project Team BE LIABLE FOR ANY
+ * DISCLAIMED. IN NO EVENT SHALL THE GPGToolz Project Team BE LIABLE FOR ANY
  * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
  * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
  * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
@@ -35,6 +35,14 @@
 #import "NSWindow+GPGMail.h"
 #import "GMSecurityMethodAccessoryView.h"
 #import "GPGMailBundle.h"
+
+
+
+@interface NSAppearance(bestMatchFromAppearancesWithNames)
+- (NSAppearanceName)bestMatchFromAppearancesWithNames:(NSArray<NSAppearanceName> *)appearances;
+@end
+
+
 
 @interface GMSecurityMethodAccessoryView ()
 @property (nonatomic, assign) BOOL fullscreen;
@@ -77,23 +85,31 @@
 	return [self initWithStyle:GMSecurityMethodAccessoryViewStyleWindowAccessory];
 }
 
+- (id)initWithStyle:(GMSecurityMethodAccessoryViewStyle)style size:(NSSize)size {
+    self = [self initWithFrame:NSMakeRect(0.0f, 0.0f, size.width, size.height) pullsDown:NO];
+    if(!self) {
+        return nil;
+    }
+    
+    self.autoresizingMask = NSViewMinYMargin | NSViewMinXMargin;
+    
+    // The arrow is hidden, since it's strangely aligned by default.
+    // GPGMail adds its own.
+    self.cell.arrowPosition = NSPopUpNoArrow;
+    
+    _attributedTitlesCache = [NSMapTable mapTableWithStrongToStrongObjects];
+    _style = style;
+    [self _configurePopupWithSecurityMethods:@[@"OpenPGP", @"S/MIME"]];
+    [self _configureArrow];
+    
+    return self;
+}
+
 - (id)initWithStyle:(GMSecurityMethodAccessoryViewStyle)style {
-	self = [super initWithFrame:NSMakeRect(0.0f, 0.0f, GMSMA_DEFAULT_WIDTH, GMSMA_DEFAULT_HEIGHT) pullsDown:NO];
+    self = [self initWithStyle:style size:NSMakeSize(GMSMA_DEFAULT_WIDTH, GMSMA_DEFAULT_HEIGHT)];
 	if (!self) {
 		return nil;
 	}
-	
-	
-	self.autoresizingMask = NSViewMinYMargin | NSViewMinXMargin;
-	
-	// The arrow is hidden, since it's strangely aligned by default.
-	// GPGMail adds its own.
-	self.cell.arrowPosition = NSPopUpNoArrow;
-	
-	_attributedTitlesCache = [NSMapTable mapTableWithStrongToStrongObjects];
-	_style = style;
-	[self _configurePopupWithSecurityMethods:@[@"OpenPGP", @"S/MIME"]];
-	[self _configureArrow];
 	
     return self;
 }
@@ -209,6 +225,8 @@
 	if (self.securityMethod == sender.tag) {
 		return;
 	}
+    
+    self.securityMethod = (GPGMAIL_SECURITY_METHOD)sender.tag;
 	
 	[self.delegate securityMethodAccessoryView:self didChangeSecurityMethod:(GPGMAIL_SECURITY_METHOD)sender.tag];
 }
@@ -218,6 +236,7 @@
         return;
 	}
 	
+    _previousSecurityMethod = _securityMethod;
     _securityMethod = securityMethod;
     // Update the selection and center the menu title again.
     [self selectItemAtIndex:securityMethod == GPGMAIL_SECURITY_METHOD_OPENPGP ? 0 : 1];
@@ -321,7 +340,20 @@
     NSUInteger blueStart = 240.0f;
     NSUInteger redStep, greenStep, blueStep;
     redStep = greenStep = blueStep = 18.0f;
-    
+	
+	if (@available(macOS 10.14, *)) {
+		NSAppearance *appearance = NSAppearance.currentAppearance;
+		NSAppearanceName appearanceName = [appearance bestMatchFromAppearancesWithNames:@[NSAppearanceNameAqua, @"NSAppearanceNameDarkAqua"]];
+		if ([appearanceName isEqualToString:@"NSAppearanceNameDarkAqua"]) {
+			redStart = 0;
+			greenStart *= 0.5;
+			greenStartAlt *= 0.5;
+			redStep = 0;
+			greenStep *= 0.5;
+		}
+	}
+
+	
     if(!self.fullscreen) {
         gradient = [[NSGradient alloc] initWithColorsAndLocations:[NSColor colorWithDeviceRed:redStart/255.0f green:greenStart/255.0f blue:blueStart/255.0f alpha:1.0], 0.0f,
                     [NSColor colorWithDeviceRed:(redStart + (redStep * 1))/255.0f green:(greenStart + (greenStep * 1))/255.0f blue:blueStart/255.0f alpha:1.0], 0.13f,
@@ -330,7 +362,7 @@
                     [NSColor colorWithDeviceRed:(redStart + (redStep * 3))/255.0f green:(greenStart + (greenStep * 3))/255.0f blue:blueStart/255.0f alpha:1.0], 1.0f, nil];
     }
     else {
-        redStep = greenStep = blueStep = 8.0f;
+        redStep = greenStep = blueStep *= 0.44;
         gradient = [[NSGradient alloc] initWithColorsAndLocations:[NSColor colorWithDeviceRed:(redStart + (redStep * 2))/255.0f green:(greenStartAlt + (greenStep * 2))/255.0f blue:(blueStart + (blueStep * 1))/255.0f alpha:1.0], 0.0f,
                     [NSColor colorWithDeviceRed:(redStart + (redStep * 3))/255.0f green:(greenStartAlt + (greenStep * 3))/255.0f blue:(blueStart + (blueStep * 1))/255.0f alpha:1.0], 0.13f,
                     [NSColor colorWithDeviceRed:(redStart + (redStep * 4))/255.0f green:(greenStartAlt + (greenStep * 4))/255.0f blue:(blueStart + (blueStep * 1))/255.0f alpha:1.0], 0.27f,
@@ -348,7 +380,16 @@
     
     NSUInteger greenStart = 128.0f;
     NSUInteger greenStep = 18.0f;
-    
+	
+	if (@available(macOS 10.14, *)) {
+		NSAppearance *appearance = NSAppearance.currentAppearance;
+		NSAppearanceName appearanceName = [appearance bestMatchFromAppearancesWithNames:@[NSAppearanceNameAqua, @"NSAppearanceNameDarkAqua"]];
+		if ([appearanceName isEqualToString:@"NSAppearanceNameDarkAqua"]) {
+			greenStart *= 0.5;
+		}
+	}
+
+	
     if(!self.fullscreen) {
         gradient = [[NSGradient alloc] initWithColorsAndLocations:[NSColor colorWithDeviceRed:0/255.0f green:greenStart/255.0f blue:0/255.0f alpha:1.0], 0.0f,
                     [NSColor colorWithDeviceRed:0/255.0f green:(greenStart + (greenStep * 1))/255.0f blue:0/255.0f alpha:1.0], 0.13f,
@@ -375,9 +416,20 @@
     
     NSUInteger greyStart = 146.0f;
     NSUInteger greyStep = 18.0f;
-    
+    NSUInteger strokeGrey = 219.0f;
+	
+	
+	if (@available(macOS 10.14, *)) {
+		NSAppearance *appearance = NSAppearance.currentAppearance;
+		NSAppearanceName appearanceName = [appearance bestMatchFromAppearancesWithNames:@[NSAppearanceNameAqua, @"NSAppearanceNameDarkAqua"]];
+		if ([appearanceName isEqualToString:@"NSAppearanceNameDarkAqua"]) {
+			greyStart *= 0.15;
+			strokeGrey *= 0.15;
+		}
+	}
+	
     if(!self.fullscreen) {
-        gradient = [[NSGradient alloc] initWithColorsAndLocations:[NSColor colorWithDeviceRed:greyStart/255.0f green:128.0f/255.0f blue:128.0f/255.0f alpha:1.0], 0.0f,
+        gradient = [[NSGradient alloc] initWithColorsAndLocations:[NSColor colorWithDeviceRed:greyStart/255.0f green:greyStart/255.0f blue:greyStart/255.0f alpha:1.0], 0.0f,
                     [NSColor colorWithDeviceRed:(greyStart + (greyStep * 1))/255.0f green:(greyStart + (greyStep * 1))/255.0f blue:(greyStart + (greyStep * 1))/255.0f alpha:1.0], 0.13f,
                     [NSColor colorWithDeviceRed:(greyStart + (greyStep * 1))/255.0f green:(greyStart + (greyStep * 1))/255.0f blue:(greyStart + (greyStep * 1))/255.0f alpha:1.0], 0.27f,
                     [NSColor colorWithDeviceRed:(greyStart + (greyStep * 2))/255.0f green:(greyStart + (greyStep * 2))/255.0f blue:(greyStart + (greyStep * 2))/255.0f alpha:1.0], 0.61f,
@@ -395,7 +447,7 @@
     }
     
     
-    *strokeColor = [NSColor colorWithDeviceRed:greyStart/255.0f green:greyStart/255.0f blue:greyStart/255.0f alpha:1.0];
+    *strokeColor = [NSColor colorWithDeviceRed:strokeGrey/255.0f green:strokeGrey/255.0f blue:strokeGrey/255.0f alpha:1.0];
     
     return gradient;
 }

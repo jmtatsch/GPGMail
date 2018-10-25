@@ -1,7 +1,7 @@
 /* MimeBody+GPGMail.m created by stephane on Thu 06-Jul-2000 */
 
 /*
- * Copyright (c) 2000-2011, GPGTools Project Team <gpgtools-devel@lists.gpgtools.org>
+ * Copyright (c) 2000-2011, GPGToolz Project Team <gpgtoolz-devel@lists.gpgtoolz.org>
  * All rights reserved.
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -11,14 +11,14 @@
  *     * Redistributions in binary form must reproduce the above copyright
  *       notice, this list of conditions and the following disclaimer in the
  *       documentation and/or other materials provided with the distribution.
- *     * Neither the name of GPGTools Project Team nor the names of GPGMail
+ *     * Neither the name of GPGToolz Project Team nor the names of GPGMail
  *       contributors may be used to endorse or promote products
  *       derived from this software without specific prior written permission.
  *
- * THIS SOFTWARE IS PROVIDED BY THE GPGTools Project Team ``AS IS'' AND ANY
+ * THIS SOFTWARE IS PROVIDED BY THE GPGToolz Project Team ``AS IS'' AND ANY
  * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE GPGTools Project Team BE LIABLE FOR ANY
+ * DISCLAIMED. IN NO EVENT SHALL THE GPGToolz Project Team BE LIABLE FOR ANY
  * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
  * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
  * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
@@ -32,28 +32,43 @@
 #import "CCLog.h"
 #import "NSObject+LPDynamicIvars.h"
 #import "NSData+GPGMail.h"
-#import "Message.h"
-#import "MessageStore.h"
-#import "MimeBody.h"
+//#import "Message.h"
+//#import "MessageStore.h"
+//#import "MimeBody.h"
 #import "Message+GPGMail.h"
 #import "MimeBody+GPGMail.h"
 #import "MimePart+GPGMail.h"
 
+#import "GMMessageSecurityFeatures.h"
+
+#define MAIL_SELF ((MCMimeBody *)self)
+
+extern NSString * const kMessageSecurityFeaturesKey;
+const NSString *kMimeBodyMessageKey = @"MimeBodyMessageKey";
+
+@interface MimeBody_GPGMail (NotImplemented)
+
+- (id)messageDataIncludingFromSpace:(BOOL)arg1 newDocumentID:(id)arg2 fetchIfNotAvailable:(BOOL)arg3;
+
+@end
+
 @implementation MimeBody_GPGMail
 
-- (BOOL)MAIsSignedByMe {
-    // This method tries to check the
-    // signatures internally, if some are set.
-    // This results in a crash, since Mail.app
-    // can't handle GPGSignature signatures.
-    NSArray *messageSigners = [[self message] PGPSignatures];
-    if([messageSigners count] && [messageSigners[0] isKindOfClass:[GPGSignature class]]) {
-        return YES;
-    }
-    // Otherwise call the original method.
-    BOOL ret = [self MAIsSignedByMe];
-    return ret;
-}
+// TODO: Gone in High Sierra. Remove? Find replacement?
+//- (BOOL)MAIsSignedByMe {
+//    // This method tries to check the
+//    // signatures internally, if some are set.
+//    // This results in a crash, since Mail.app
+//    // can't handle GPGSignature signatures.
+//    GMMessageSecurityFeatures *securityProperties = [self securityFeatures];
+//    NSArray *messageSigners = [securityProperties PGPSignatures];
+//    if([messageSigners count] && [messageSigners[0] isKindOfClass:[GPGSignature class]]) {
+//        return YES;
+//    }
+//    // Otherwise call the original method.
+//    BOOL ret = [self MAIsSignedByMe];
+//    return ret;
+//}
 
 /**
  It's not exactly clear when this method is used, but internally it
@@ -67,49 +82,126 @@
  Apparently 
  
  */
-- (BOOL)MA_isPossiblySignedOrEncrypted {
-    // Check if message should be processed (-[Message shouldBePGPProcessed] - Snippet generation check)
-    // otherwise out of here!
-    if(![[self message] shouldBePGPProcessed])
-        return [self MA_isPossiblySignedOrEncrypted];
+// TODO: Gone in High Sierra. Remove? Find replacement?
+//- (BOOL)MA_isPossiblySignedOrEncrypted {
+//    // Check if message should be processed (-[Message shouldBePGPProcessed] - Snippet generation check)
+//    // otherwise out of here!
+//    if(![(MimePart_GPGMail *)[MAIL_SELF topLevelPart] shouldBePGPProcessed])
+//        return [self MA_isPossiblySignedOrEncrypted];
+//}
+
+- (BOOL)mightContainPGPMIMESignedData {
+    __block BOOL foundMIMESignedTopLevel = NO;
+    __block BOOL foundMIMESignature = NO;
+    [(MimePart_GPGMail *)[MAIL_SELF topLevelPart] enumerateSubpartsWithBlock:^(MCMimePart *mimePart) {
+        if([mimePart isType:@"multipart" subtype:@"signed"]) {
+            foundMIMESignedTopLevel = YES;
+        }
+        if([mimePart isType:@"application" subtype:@"pgp-signature"]) {
+            foundMIMESignature = YES;
+        }
+    }];
+
+    return foundMIMESignedTopLevel && foundMIMESignature;
+}
+
+- (BOOL)mightContainPGPData {
+    __block BOOL mightContainPGPData = NO;
+    __block BOOL mightContainSMIMEData = NO;
+
+    NSArray *pgpExtensions = @[@"pgp", @"gpg", @"asc", @"sig"];
+    NSArray *smimeExtensions = @[@"p7m", @"p7s", @"p7c", @"p7z"];
+    [(MimePart_GPGMail *)[MAIL_SELF topLevelPart] enumerateSubpartsWithBlock:^(MCMimePart *mimePart) {
+        // Check for S/MIME hints.
+        if(([mimePart isType:@"multipart" subtype:@"signed"] && [[[mimePart bodyParameterForKey:@"protocol"] lowercaseString] isEqualToString:@"application/pkcs7-signature"]) ||
+           [smimeExtensions containsObject:[[[mimePart bodyParameterForKey:@"filename"] lowercaseString] pathExtension]] ||
+           [smimeExtensions containsObject:[[[mimePart bodyParameterForKey:@"name"] lowercaseString] pathExtension]] ||
+           [mimePart isType:@"application" subtype:@"pkcs7-mime"]) {
+            mightContainSMIMEData = YES;
+            return;
+        }
+        BOOL mimeSigned = [mimePart isType:@"multipart" subtype:@"signed"] && ![[[mimePart bodyParameterForKey:@"protocol"] lowercaseString] isEqualToString:@"application/pkcs7-signature"];
+        if([mimePart isType:@"multipart" subtype:@"encrypted"] ||
+           mimeSigned ||
+           [mimePart isType:@"application" subtype:@"pgp-encrypted"] ||
+           [mimePart isType:@"application" subtype:@"pgp-signature"]) {
+            mightContainPGPData = YES;
+            return;
+        }
+
+        NSString *nameParameter = [[mimePart bodyParameterForKey:@"name"] lowercaseString];
+        NSString *filenameParameter = [[mimePart bodyParameterForKey:@"filename"] lowercaseString];
+
+        NSString *nameExt = [nameParameter pathExtension];
+        NSString *filenameExt = [filenameParameter pathExtension];
+
+        if([pgpExtensions containsObject:nameExt] || [pgpExtensions containsObject:filenameExt]) {
+            mightContainPGPData = YES;
+            return;
+        }
+
+        // Last but not least, check for winmail.dat files, which could contain
+        // signed or encrypted data, where the mime structure was altered by
+        // MS Exchange.
+        if([mimePart isType:@"application" subtype:@"ms-tnef"] ||
+           [nameParameter isEqualToString:@"winmail.dat"] ||
+           [nameParameter isEqualToString:@"win.dat"] ||
+           [filenameParameter isEqualToString:@"winmail.dat"] ||
+           [filenameParameter isEqualToString:@"win.dat"]) {
+            mightContainPGPData = YES;
+            return;
+        }
+
+        // And another special case seems to be fixed by rebuilding the message.
+        // If message/rfc822 mime part is included in the received message,
+        // Mail seems to fuck up the data source necessary to decode that message.
+        // As a result, only parts of the message are displayed.
+        // If however GPGMail rebuilds the message internally from cached data,
+        // the data source is properly setup and it's possible to decode the message.
+        // While the message might not contain PGP data, YES is still returned
+        // from this method, in order to instruct GPGMail to rebuild the message.
+        if([mimePart isType:@"message" subtype:@"rfc822"]) {
+            mightContainPGPData = YES;
+            return;
+        }
+
+    }];
+
+    return mightContainPGPData && !mightContainSMIMEData;
+}
+
+- (MCMessage *)GMMessage {
+    return [self getIvar:kMimeBodyMessageKey];
+}
+
+- (NSData *)MAParsedMessage {
+    DebugLog(@"Has message? %@", [self getIvar:kMimeBodyMessageKey]);
+    id parsedMessage = [self MAParsedMessage];
+    [parsedMessage setIvar:kMimeBodyMessageKey value:[self getIvar:kMimeBodyMessageKey]];
     
-    return [self MA_isPossiblySignedOrEncrypted];
+    [self collectSecurityFeatures];
+    [parsedMessage setIvar:kMessageSecurityFeaturesKey value:[self securityFeatures]];
+    
+    return parsedMessage;
 }
 
-- (BOOL)containsPGPEncryptedData {
-    if(![[self message] ivarExists:@"containsPGPEncryptedData"]) {
-        // This might be expensive, but heck...
-        // The problem is, for messages with large attachments Mail.app doesn't return the complete
-        // body data for -[MimeBody bodyData].
-        // To get the complete data, the message store has to be asked directly.
-        NSRange encryptedDataRange = [[[[self message] dataSourceProxy] fullBodyDataForMessage:[self message]] rangeOfPGPInlineEncryptedData];
-        if(encryptedDataRange.location != NSNotFound)
-            [[self message] setIvar:@"containsPGPEncryptedData" value:@YES];
-        else
-            [[self message] setIvar:@"containsPGPEncryptedData" value:@NO];
-    }   
-    return [[[self message] getIvar:@"containsPGPEncryptedData"] boolValue];
+- (void)collectSecurityFeatures {
+    // Collect the security parse result.
+    GMMessageSecurityFeatures *securityFeatures = [GMMessageSecurityFeatures securityFeaturesFromMimeBody:self];
+    // TODO: What to do if the security features are already set?
+    [self setSecurityFeatures:securityFeatures];
+    [[self getIvar:kMimeBodyMessageKey] setIvar:kMessageSecurityFeaturesKey value:securityFeatures];
 }
 
-- (BOOL)containsPGPSignedData {
-    if(![[self message] ivarExists:@"containsPGPSignedData"]) {
-        NSRange signedDataRange = [[self bodyData] rangeOfPGPSignatures];
-        if(signedDataRange.location != NSNotFound)
-            [[self message] setIvar:@"containsPGPSignedData" value:@YES];
-        else
-            [[self message] setIvar:@"containsPGPSignedData" value:@NO];
-    }
-    // In case of a inline decrypted message body, the decrypted data doesn't contain the signature
-    // but only the top level part of the decrypted message body.
-    return [[[self message] getIvar:@"containsPGPSignedData"] boolValue] || [[self topLevelPart] PGPSigned];
+- (void)setSecurityFeatures:(GMMessageSecurityFeatures *)securityFeatures {
+    [self setIvar:kMessageSecurityFeaturesKey value:securityFeatures];
 }
 
-- (BOOL)containsPGPData {
-    if([self containsPGPEncryptedData])
-        return YES;
-    if([self containsPGPSignedData])
-        return YES;
-    return NO;
+- (GMMessageSecurityFeatures *)securityFeatures {
+    return [self getIvar:kMessageSecurityFeaturesKey];
 }
 
 @end
+
+#undef MAIL_SELF
+

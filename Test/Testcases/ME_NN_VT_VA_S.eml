@@ -1,9 +1,9 @@
-Message-ID: <4E44674B.50202@gpgtools.org>
+Message-ID: <4E44674B.50202@gpgtoolz.org>
 Date: Fri, 12 Aug 2011 01:35:39 +0200
-From: GPGTools Test Key <test@gpgtools.org>
+From: GPGToolz Test Key <test@gpgtoolz.org>
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.7; rv:5.0) Gecko/20110624 Thunderbird/5.0
 MIME-Version: 1.0
-To: test@gpgtools.org
+To: test@gpgtoolz.org
 Subject: ME/NN/VT/VA/S
 X-Enigmail-Version: 1.2
 Content-Type: multipart/encrypted;
@@ -24,7 +24,7 @@ Content-Disposition: inline; filename="encrypted.asc"
 
 -----BEGIN PGP MESSAGE-----
 Version: GnuPG/MacGPG2 v2.0.17 (Darwin)
-Comment: GPGTools - http://gpgtools.org
+Comment: GPGToolz - http://gpgtoolz.org
 Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
 
 hQEMA1JrCfEKo9qCAQgAivrQKU/hpmKh34t10M5vkriSUTODCpnGB25bBFNfV5xx

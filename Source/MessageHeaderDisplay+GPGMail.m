@@ -7,13 +7,12 @@
 //
 
 #import <AppKit/NSColor.h>
-#import <MFError.h>
-#import <MimePart.h>
-#import <MimeBody.h>
+#import <MCMimePart.h>
+#import <MCMimeBody.h>
 #import <NSAttributedString-FontAdditions.h>
-#import <MessageHeaderDisplay.h>
-#import <MessageViewingState.h>
-#import <NSAlert-MFErrorSupport.h>
+//#import <MessageHeaderDisplay.h>
+//#import <MessageViewingState.h>
+//#import <NSAlert-MFErrorSupport.h>
 #import "CCLog.h"
 #import "NSObject+LPDynamicIvars.h"
 #import "GPGSignatureView.h"
@@ -25,11 +24,13 @@
 #import "NSAttributedString+GPGMail.h"
 #import "MessageHeaderDisplay+GPGMail.h"
 #import "MessageContentController+GPGMail.h"
-#import "EmailViewController.h"
+//#import "EmailViewController.h"
 #import "HeaderViewController.h"
 #import "ComposeBackEnd.h"
 #import "ConversationMember.h"
 #import "MCMessage.h"
+
+#import "GMMessageSecurityFeatures.h"
 
 @implementation MessageHeaderDisplay_GPGMail
 
@@ -37,10 +38,10 @@
     if(![link isEqualToString:@"gpgmail://show-signature"] && ![link isEqualToString:@"gpgmail://decrypt"] &&
        ![link isEqualToString:@"gpgmail://show-attachments"])
         return [self MATextView:textView clickedOnLink:link atIndex:index];
-    if([link isEqualToString:@"gpgmail://decrypt"]) {
-        [self _decryptMessage];
-        return YES;
-    }
+//    if([link isEqualToString:@"gpgmail://decrypt"]) {
+//        [self _decryptMessage];
+//        return YES;
+//    }
     if([link isEqualToString:@"gpgmail://show-signature"]) {
         [self _showSignaturePanel];
     }
@@ -69,10 +70,9 @@
 
 - (void)_showAttachmentsPanel {
     NSArray *pgpAttachments = nil;
-    if(![GPGMailBundle isMavericks])
-        pgpAttachments = [(Message_GPGMail *)[(MessageViewingState *)[((MessageHeaderDisplay *)self) viewingState] message] PGPAttachments];
-    else
-        pgpAttachments = [(Message_GPGMail *)[(ConversationMember *)[(HeaderViewController *)self representedObject] originalMessage] PGPAttachments];
+    GM_CAST_CLASS(MCMessage *, id) message = (Message_GPGMail *)[(ConversationMember *)[(HeaderViewController *)self representedObject] originalMessage];
+    GMMessageSecurityFeatures *securityFeatures = [message securityFeatures];
+    pgpAttachments = [securityFeatures PGPAttachments];
     
     GPGAttachmentController *attachmentController = [[GPGAttachmentController alloc] initWithAttachmentParts:pgpAttachments];
     attachmentController.keyList = [[GPGMailBundle sharedInstance] allGPGKeys];
@@ -102,7 +102,8 @@
         // The error domain is checked in certain occasion, so let's use the system
         // dependent one.
         NSString *errorDomain = [GPGMailBundle isMavericks] ? @"MCMailErrorDomain" : @"MFMessageErrorDomain";
-        MFError *error = [GM_MAIL_CLASS(@"MFError") errorWithDomain:errorDomain code:1035 localizedDescription:message title:title helpTag:nil userInfo:@{@"_MFShortDescription": title, @"NSLocalizedDescription": message}];
+        // TODO: Fix to use the new Sierra method!
+        NSError *error = nil;/*[GM_MAIL_CLASS(@"MFError") errorWithDomain:errorDomain code:1035 localizedDescription:message title:title helpTag:nil userInfo:@{@"_MFShortDescription": title, @"NSLocalizedDescription": message}];*/
         // NSAlert has different category methods based on the version of OS X.
 		NSAlert *alert = nil;
 		if([[NSAlert class] respondsToSelector:@selector(alertForError:defaultButton:alternateButton:otherButton:)]) {
@@ -122,47 +123,45 @@
     }];
 }
 
-- (void)_decryptMessage {
-    [[[((MessageHeaderDisplay *)self) parentController] parentController] decryptPGPMessage];
-}
-
-- (id)MA_attributedStringForSecurityHeader {
-    MessageViewingState *viewingState = [((MessageHeaderDisplay *)self) viewingState];
-    GM_CAST_CLASS(Message *, id) message = [viewingState message];
-    GM_CAST_CLASS(MimeBody *, id) mimeBody = [viewingState mimeBody];
-    
-    if(![message shouldBePGPProcessed])
-        return [self MA_attributedStringForSecurityHeader];
-    
-    // If no viewingState is set, return an empty string.
-    if(!viewingState || viewingState.headerDetailLevel == 0)
-        return [[NSAttributedString alloc] initWithString:@""];
-    
-    NSAttributedString *headerSecurityString = viewingState.headerSecurityString;
-    if(headerSecurityString)
-        return headerSecurityString;
-    
-    // Check the mime body, is more reliable.
-    BOOL isPGPSigned = (BOOL)[message PGPSigned];
-    BOOL isPGPEncrypted = (BOOL)[message PGPEncrypted] && ![mimeBody ivarExists:@"PGPEarlyAlphaFuckedUpEncrypted"];
-    BOOL hasPGPAttachments = (BOOL)[message numberOfPGPAttachments] > 0 ? YES : NO;
-    
-    if(!isPGPSigned && !isPGPEncrypted && !hasPGPAttachments)
-        return [self MA_attributedStringForSecurityHeader];
-    
-    NSMutableAttributedString *securityHeader = [self securityHeaderForMessage:message mimeBody:mimeBody];
-    
-    NSMutableAttributedString *finalSecurityHeader = [[NSMutableAttributedString alloc] init];
-    [finalSecurityHeader appendAttributedString:securityHeader];
-    [finalSecurityHeader appendAttributedString:[NSAttributedString attributedStringWithString:@"\n"]];
-    [finalSecurityHeader addAttribute:NSParagraphStyleAttributeName value:[(MessageHeaderDisplay *)self _paragraphStyleWithLineHeight:16.0f indent:19] range:NSMakeRange(0, 1)];
-    [finalSecurityHeader addAttribute:@"header label" value:@"yes" range:NSMakeRange(1, [finalSecurityHeader length] - 1)];
-    [finalSecurityHeader addAttribute:@"key" value:@"security" range:NSMakeRange(1, [finalSecurityHeader length] - 1)];
-    
-    viewingState.headerSecurityString = finalSecurityHeader;
-    
-    return finalSecurityHeader;
-}
+//- (id)MA_attributedStringForSecurityHeader {
+//    MessageViewingState *viewingState = [((MessageHeaderDisplay *)self) viewingState];
+//    GM_CAST_CLASS(Message *, id) message = [viewingState message];
+//    GM_CAST_CLASS(MimeBody *, id) mimeBody = [viewingState mimeBody];
+//    
+//    // TODO: Re-implement using security features.
+//    return [[NSAttributedString alloc] initWithString:@""];
+////    if(![message shouldBePGPProcessed])
+////        return [self MA_attributedStringForSecurityHeader];
+////    
+////    // If no viewingState is set, return an empty string.
+////    if(!viewingState || viewingState.headerDetailLevel == 0)
+////        return [[NSAttributedString alloc] initWithString:@""];
+////    
+////    NSAttributedString *headerSecurityString = viewingState.headerSecurityString;
+////    if(headerSecurityString)
+////        return headerSecurityString;
+////    
+////    // Check the mime body, is more reliable.
+////    BOOL isPGPSigned = (BOOL)[message PGPSigned];
+////    BOOL isPGPEncrypted = (BOOL)[message PGPEncrypted] && ![mimeBody ivarExists:@"PGPEarlyAlphaFuckedUpEncrypted"];
+////    BOOL hasPGPAttachments = (BOOL)[message numberOfPGPAttachments] > 0 ? YES : NO;
+////    
+////    if(!isPGPSigned && !isPGPEncrypted && !hasPGPAttachments)
+////        return [self MA_attributedStringForSecurityHeader];
+////    
+////    NSMutableAttributedString *securityHeader = [self securityHeaderForMessage:message mimeBody:mimeBody];
+////    
+////    NSMutableAttributedString *finalSecurityHeader = [[NSMutableAttributedString alloc] init];
+////    [finalSecurityHeader appendAttributedString:securityHeader];
+////    [finalSecurityHeader appendAttributedString:[NSAttributedString attributedStringWithString:@"\n"]];
+////    [finalSecurityHeader addAttribute:NSParagraphStyleAttributeName value:[(MessageHeaderDisplay *)self _paragraphStyleWithLineHeight:16.0f indent:19] range:NSMakeRange(0, 1)];
+////    [finalSecurityHeader addAttribute:@"header label" value:@"yes" range:NSMakeRange(1, [finalSecurityHeader length] - 1)];
+////    [finalSecurityHeader addAttribute:@"key" value:@"security" range:NSMakeRange(1, [finalSecurityHeader length] - 1)];
+////    
+////    viewingState.headerSecurityString = finalSecurityHeader;
+////    
+////    return finalSecurityHeader;
+//}
 
 - (void)MAToggleDetails:(id)target {
     // Make sure loading stage is removed, so the detail view
@@ -171,6 +170,16 @@
     if([message getIvar:@"LoadingStage"])
         [message removeIvar:@"LoadingStage"];
     [self MAToggleDetails:target];
+}
+
+
+
+- (NSAttributedString *)MASecurityHeaderString {
+    NSAttributedString *securityHeaderString = [self MA_displayStringForSecurityKey];
+    if(!securityHeaderString || [securityHeaderString length] == 0) {
+        return [self MASecurityHeaderString];
+    }
+    return securityHeaderString;
 }
 
 - (void)MA_updateTextStorageWithHardInvalidation:(BOOL)hardValidation {
@@ -211,50 +220,45 @@
             [self setShowDetails:1];
         }
         
-        if(message.PGPInfoCollected && (message.PGPEncrypted || message.PGPSigned) && [message getIvar:@"LoadingStage"]) {
-            if(floor(NSAppKitVersionNumber) > NSAppKitVersionNumber10_9) {
-                [self setIvar:@"RealShowDetails" value:[self valueForKey:@"_showDetails"]];
-                [self setShowDetails:1];
-            }
-            else {
-                [self setIvar:@"RealDetailsHidden" value:[self valueForKey:@"_detailsHidden"]];
-                [self setValue:@(0) forKey:@"_detailsHidden"];
-                [self _updateDetailsButton];
-            }
-            [self MA_updateTextStorageWithHardInvalidation:YES];
-            return;
-        }
-        
+        // TODO: Re-implement using security features.
+//        
+//        if(message.PGPInfoCollected && (message.PGPEncrypted || message.PGPSigned) && [message getIvar:@"LoadingStage"]) {
+//            if(floor(NSAppKitVersionNumber) > NSAppKitVersionNumber10_9) {
+//                [self setIvar:@"RealShowDetails" value:[self valueForKey:@"_showDetails"]];
+//                [self setShowDetails:1];
+//            }
+//            else {
+//                [self setIvar:@"RealDetailsHidden" value:[self valueForKey:@"_detailsHidden"]];
+//                [self setValue:@(0) forKey:@"_detailsHidden"];
+//                [self _updateDetailsButton];
+//            }
+//            [self MA_updateTextStorageWithHardInvalidation:YES];
+//            return;
+//        }
+//        
         [self MA_updateTextStorageWithHardInvalidation:hardValidation];
     }
 }
 
 - (id)MA_displayStringForSecurityKey {
-    GM_CAST_CLASS(MCMessage *, id) message = [(ConversationMember *)[(HeaderViewController *)self representedObject] originalMessage];
-    GM_CAST_CLASS(MCMimeBody *, id) mimeBody = [(ConversationMember *)[(HeaderViewController *)self representedObject] messageBody];
-    
-    if(![message shouldBePGPProcessed]) {
-        if(floor(NSAppKitVersionNumber) > NSAppKitVersionNumber10_9)
-            return nil;
-        else
-            return [self MA_displayStringForSecurityKey];
+    if(![[GPGMailBundle sharedInstance] hasActiveContractOrActiveTrial]) {
+		// MA_displayStringForSecurityKey no longer exists on High Sierra or Mojave,
+		// so return nil instead.
+		return nil;
     }
+    GM_CAST_CLASS(MCMessage *, id) message = (Message_GPGMail *)[(ConversationMember *)[(HeaderViewController *)self representedObject] originalMessage];
     
-    // Check the mime body, is more reliable.
-    BOOL isPGPSigned = (BOOL)[message PGPSigned];
-    BOOL isPGPEncrypted = (BOOL)[message PGPEncrypted] && ![mimeBody ivarExists:@"PGPEarlyAlphaFuckedUpEncrypted"];
-    BOOL hasPGPAttachments = (BOOL)[message numberOfPGPAttachments] > 0 ? YES : NO;
+    GMMessageSecurityFeatures *securityProperties = [message securityFeatures];
     
+    BOOL isPGPSigned = securityProperties.PGPSigned;
+    BOOL isPGPEncrypted = securityProperties.PGPEncrypted;
+    BOOL hasPGPAttachments = securityProperties.numberOfPGPAttachments > 0 ? YES : NO;
+
     if(!isPGPSigned && !isPGPEncrypted && !hasPGPAttachments) {
-        if(floor(NSAppKitVersionNumber) > NSAppKitVersionNumber10_9) {
-            return [[NSAttributedString alloc] initWithString:@""];
-        }
-        else {
-            return [self MA_displayStringForSecurityKey];
-        }
+        return [[NSAttributedString alloc] initWithString:@""];
     }
     
-    NSMutableAttributedString *displayString = [self securityHeaderForMessage:message mimeBody:mimeBody];
+    NSMutableAttributedString *displayString = [self securityHeaderForMessage:message];
     
     NSMutableParagraphStyle *paragraphStyle = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
     paragraphStyle.baseWritingDirection = [NSParagraphStyle defaultWritingDirectionForLanguage:nil];
@@ -284,7 +288,7 @@
     return displayString;
 }
 
-- (NSMutableAttributedString *)securityHeaderForMessage:(GM_CAST_CLASS(Message *, id))message mimeBody:(GM_CAST_CLASS(MimeBody *, id))mimeBody {
+- (NSMutableAttributedString *)securityHeaderForMessage:(GM_CAST_CLASS(Message *, id))message {
     // This is also called if the message is neither signed nor encrypted.
     // In that case the empty string is returned.
     // Internally this method checks the message's messageFlags
@@ -292,34 +296,21 @@
     // based on that information creates the encrypted symbol
     // and calls copySingerLabels on the topLevelPart.
     
+    // TODO: Change method signature if using security features works.
+    GMMessageSecurityFeatures *securityFeatures = [message securityFeatures];
     // Check the mime body, is more reliable.
-    BOOL isPGPSigned = (BOOL)[message PGPSigned];
-    BOOL isPGPEncrypted = (BOOL)[message PGPEncrypted] && ![mimeBody ivarExists:@"PGPEarlyAlphaFuckedUpEncrypted"];
+    BOOL isPGPSigned = securityFeatures.PGPSigned;
+    BOOL isPGPEncrypted = securityFeatures.PGPEncrypted;// && ![mimeBody ivarExists:@"PGPEarlyAlphaFuckedUpEncrypted"];
     
-    NSString *securityHeaderLabelKey = [GPGMailBundle isMavericks] || [GPGMailBundle isYosemite] ? @"SecurityHeaderLabel" : @"SECURITY_HEADER";
+    NSString *securityHeaderLabelKey = @"SecurityHeaderLabel";
     
     NSString *indentation = @"";
-    if([GPGMailBundle isMountainLion] && ![GPGMailBundle isMavericks])
-        indentation = @"";
-    else if([GPGMailBundle isMavericks])
-        indentation = @"";
-    else
-        indentation = @"\t";
     NSMutableAttributedString *securityHeader = [NSMutableAttributedString new];
     [securityHeader beginEditing];
     
     NSMutableString *securityHeaderString = [securityHeader mutableString];
     
-    if([GPGMailBundle isYosemite]) {
-        [securityHeaderString appendFormat:@"%@:", [[NSBundle mainBundle] localizedStringForKey:securityHeaderLabelKey value:@"" table:@"Encryption"]];
-    }
-    else if([GPGMailBundle isMavericks]) {
-        [securityHeaderString appendFormat:NSLocalizedStringFromTableInBundle(@"MessageHeaderLabelFormat", nil, [NSBundle mainBundle], @""), NSLocalizedStringFromTableInBundle(securityHeaderLabelKey, @"Encryption", [NSBundle mainBundle], @"")];
-    }
-    else {
-        [securityHeaderString appendString:[NSString stringWithFormat:@"%@%@", indentation,
-                                            NSLocalizedStringFromTableInBundle(securityHeaderLabelKey, @"Encryption", [NSBundle mainBundle], @"")]];
-    }
+    [securityHeaderString appendFormat:@"%@:", [[NSBundle mainBundle] localizedStringForKey:securityHeaderLabelKey value:@"" table:@"Encryption"]];
     
     // Add the encrypted part to the security header.
     if(isPGPEncrypted) {
@@ -335,7 +326,7 @@
         
         [securityHeader appendAttributedString:encryptAttachmentString];
         
-        NSString *encryptedString = [NSString stringWithFormat:@" %@", [message PGPPartlyEncrypted] ? GMLocalizedString(@"MESSAGE_IS_PGP_PARTLY_ENCRYPTED") :
+        NSString *encryptedString = [NSString stringWithFormat:@" %@", [securityFeatures PGPPartlyEncrypted] ? GMLocalizedString(@"MESSAGE_IS_PGP_PARTLY_ENCRYPTED") :
         GMLocalizedString(@"MESSAGE_IS_PGP_ENCRYPTED")];
         if([GPGMailBundle isMavericks])
             [securityHeader appendAttributedString:[NSAttributedString attributedStringWithString:encryptedString]];
@@ -344,7 +335,7 @@
     }
     if(isPGPSigned) {
         NSAttributedString *securityHeaderSignaturePart = [self securityHeaderSignaturePartForMessage:message];
-        [self setIvar:@"messageSigners" value:[message PGPSignatures]];
+        [self setIvar:@"messageSigners" value:[securityFeatures PGPSignatures]];
         
         // Only add, if message was encrypted.
         if(isPGPEncrypted) {
@@ -356,12 +347,12 @@
         
         [securityHeader appendAttributedString:securityHeaderSignaturePart];
     }
-    NSUInteger numberOfPGPAttachments = [message numberOfPGPAttachments];
+    NSUInteger numberOfPGPAttachments = [securityFeatures numberOfPGPAttachments];
     // And last but not least, add a new line.
     if(numberOfPGPAttachments) {
         NSAttributedString *securityHeaderAttachmentsPart = [self securityHeaderAttachmentsPartForMessage:message];
         
-        if([message PGPSigned] || [message PGPEncrypted])
+        if([securityFeatures PGPSigned] || [securityFeatures PGPEncrypted])
             [securityHeader appendAttributedString:[NSAttributedString attributedStringWithString:@", "]];
         [securityHeader appendAttributedString:securityHeaderAttachmentsPart];
     }
@@ -370,51 +361,55 @@
 }
 
 - (NSAttributedString *)securityHeaderAttachmentsPartForMessage:(GM_CAST_CLASS(Message *, id))message {
+    GMMessageSecurityFeatures *securityFeatures = [message securityFeatures];
+    
     BOOL hasEncryptedAttachments = NO;
     BOOL hasSignedAttachments = NO;
-    BOOL singular = [message numberOfPGPAttachments] > 1 ? NO : YES;
-    
+    BOOL singular = [securityFeatures numberOfPGPAttachments] > 1 ? NO : YES;
+
     NSMutableAttributedString *securityHeaderAttachmentsPart = [[NSMutableAttributedString alloc] init];
     NSTextAttachment *textAttachment = [[NSTextAttachment alloc] init];
     [textAttachment setIvar:@"ShowAttachmentPanel" value:@YES];
     [securityHeaderAttachmentsPart appendAttributedString:[NSAttributedString attributedStringWithAttachment:textAttachment image:[NSImage imageNamed:@"attachment_header"] link:[GPGMailBundle isMavericks] ? nil : @"gpgmail://show-attachments" offset:-3.0]];
-    
-    for(MimePart_GPGMail *attachment in [message PGPAttachments]) {
+
+    for(MimePart_GPGMail *attachment in [securityFeatures PGPAttachments]) {
         hasEncryptedAttachments |= [attachment PGPEncrypted];
         hasSignedAttachments |= [attachment PGPSigned];
     }
-    
+
     NSString *attachmentPart = nil;
-    
+
     if(hasEncryptedAttachments && hasSignedAttachments) {
-        attachmentPart = (singular ? 
+        attachmentPart = (singular ?
             GMLocalizedString(@"MESSAGE_SECURITY_HEADER_ATTACHMENT_SIGNED_ENCRYPTED_TITLE") :
             GMLocalizedString(@"MESSAGE_SECURITY_HEADER_ATTACHMENTS_SIGNED_ENCRYPTED_TITLE"));
     }
     else if(hasEncryptedAttachments) {
-        attachmentPart = (singular ? 
+        attachmentPart = (singular ?
             GMLocalizedString(@"MESSAGE_SECURITY_HEADER_ATTACHMENT_ENCRYPTED_TITLE") :
             GMLocalizedString(@"MESSAGE_SECURITY_HEADER_ATTACHMENTS_ENCRYPTED_TITLE"));
     }
     else if(hasSignedAttachments) {
-        attachmentPart = (singular ? 
+        attachmentPart = (singular ?
             GMLocalizedString(@"MESSAGE_SECURITY_HEADER_ATTACHMENT_SIGNED_TITLE") :
             GMLocalizedString(@"MESSAGE_SECURITY_HEADER_ATTACHMENTS_SIGNED_TITLE"));
     }
-    
-    NSString *encryptionString = [NSString stringWithFormat:@"%li %@", (long)[message numberOfPGPAttachments], attachmentPart];
+
+    NSString *encryptionString = [NSString stringWithFormat:@"%li %@", (long)[securityFeatures numberOfPGPAttachments], attachmentPart];
     if([GPGMailBundle isMavericks])
         [securityHeaderAttachmentsPart appendAttributedString:[NSAttributedString attributedStringWithString:encryptionString]];
     else
         [securityHeaderAttachmentsPart appendAttributedString:[[NSAttributedString alloc] initWithString:encryptionString attributes:[NSAttributedString headerAttributes]]];
-    
+
     return securityHeaderAttachmentsPart;
 }
 
 - (NSAttributedString *)securityHeaderSignaturePartForMessage:(Message_GPGMail *)message {
+    GMMessageSecurityFeatures *securityFeatures = [message securityFeatures];
+    
     GPGErrorCode errorCode = GPGErrorNoError;
     NSImage *signedImage = nil;
-    NSSet *signatures = [NSSet setWithArray:message.PGPSignatures];
+    NSSet *signatures = [NSSet setWithArray:securityFeatures.PGPSignatures];
     
     NSMutableAttributedString *securityHeaderSignaturePart = [[NSMutableAttributedString alloc] init];
     
@@ -429,10 +424,10 @@
 	// If that's the case, don't try to append signature labels.
 	if(!errorCode) {
 		GPGErrorCode __block newErrorCode = GPGErrorNoError;
-		[[message PGPErrors] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-			if([obj isKindOfClass:GM_MAIL_CLASS(@"MFError")]) {
-				if(((NSDictionary *)[(MFError *)obj userInfo])[@"VerificationErrorCode"])
-					newErrorCode = (GPGErrorCode)[((NSDictionary *)[(MFError *)obj userInfo])[@"VerificationErrorCode"] longValue];
+		[[securityFeatures PGPErrors] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+			if([obj isKindOfClass:GM_MAIL_CLASS(@"NSError")]) {
+				if(((NSDictionary *)[(NSError *)obj userInfo])[@"VerificationErrorCode"])
+					newErrorCode = (GPGErrorCode)[((NSDictionary *)[(NSError *)obj userInfo])[@"VerificationErrorCode"] longValue];
 				*stop = YES;
 			}
 		}];
@@ -470,12 +465,12 @@
     }
     
     
-    if(message.PGPPartlySigned) {
+    if(securityFeatures.PGPPartlySigned) {
 // TODO: Implement different messages for partly signed messages.
         titlePart = GMLocalizedString(@"MESSAGE_IS_PGP_PARTLY_SIGNED");
     }
     
-    NSSet *signerLabels = [NSSet setWithArray:[message PGPSignatureLabels]];
+    NSSet *signerLabels = [NSSet setWithArray:[securityFeatures PGPSignatureLabels]];
     NSTextAttachment *signedTextAttachment = [[NSTextAttachment alloc] init];
     [signedTextAttachment setIvar:@"ShowSignaturePanel" value:@YES];
     NSAttributedString *signedAttachmentString = [NSAttributedString attributedStringWithAttachment:signedTextAttachment

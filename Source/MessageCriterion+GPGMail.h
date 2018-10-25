@@ -1,7 +1,7 @@
 /* MessageCriterion+GPGMail.h created by Lukas Pitschl (@lukele) on Wed 10-Jun-2013 */
 
 /*
- * Copyright (c) 2000-2013, GPGTools Team <team@gpgtools.org>
+ * Copyright (c) 2000-2013, GPGToolz Team <team@gpgtoolz.org>
  * All rights reserved.
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -11,14 +11,14 @@
  *     * Redistributions in binary form must reproduce the above copyright
  *       notice, this list of conditions and the following disclaimer in the
  *       documentation and/or other materials provided with the distribution.
- *     * Neither the name of GPGTools nor the names of GPGMail
+ *     * Neither the name of GPGToolz nor the names of GPGMail
  *       contributors may be used to endorse or promote products
  *       derived from this software without specific prior written permission.
  *
- * THIS SOFTWARE IS PROVIDED BY THE GPGTools Team ``AS IS'' AND ANY
+ * THIS SOFTWARE IS PROVIDED BY THE GPGToolz Team ``AS IS'' AND ANY
  * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE GPGTools Team BE LIABLE FOR ANY
+ * DISCLAIMED. IN NO EVENT SHALL THE GPGToolz Team BE LIABLE FOR ANY
  * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
  * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
  * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
@@ -28,9 +28,9 @@
  */
 
 #import <Foundation/Foundation.h>
-#import "MessageCriterion.h"
+#import "MFMessageCriterion.h"
 
-@class Message;
+@class MCMessage;
 
 /**
  It's necessary to hook into this class, since Mail.app only checks
@@ -48,12 +48,12 @@
  Return YES if either the message flags have the signed bit on
  or [message isSigned] returns YES.
  */
-- (BOOL)MA_evaluateIsDigitallySignedCriterion:(Message *)message;
+- (BOOL)MA_evaluateIsDigitallySignedCriterion:(MCMessage *)message;
 
 /**
  Return YES if either the message flags have the encrypted bit on
  or [message isEncrypted] returns YES.
  */
-- (BOOL)MA_evaluateIsEncryptedCriterion:(Message *)message;
+- (BOOL)MA_evaluateIsEncryptedCriterion:(MCMessage *)message;
 
 @end

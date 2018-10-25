@@ -2,7 +2,7 @@
 /* MimeBody+GPGMail.h re-created by Lukas Pitschl (@lukele) on Wed 03-Aug-2011 */
 
 /*
- * Copyright (c) 2000-2011, GPGTools Project Team <gpgtools-devel@lists.gpgtools.org>
+ * Copyright (c) 2000-2011, GPGToolz Project Team <gpgtoolz-devel@lists.gpgtoolz.org>
  * All rights reserved.
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -12,14 +12,14 @@
  *     * Redistributions in binary form must reproduce the above copyright
  *       notice, this list of conditions and the following disclaimer in the
  *       documentation and/or other materials provided with the distribution.
- *     * Neither the name of GPGTools Project Team nor the names of GPGMail
+ *     * Neither the name of GPGToolz Project Team nor the names of GPGMail
  *       contributors may be used to endorse or promote products
  *       derived from this software without specific prior written permission.
  *
- * THIS SOFTWARE IS PROVIDED BY THE GPGTools Project Team ``AS IS'' AND ANY
+ * THIS SOFTWARE IS PROVIDED BY THE GPGToolz Project Team ``AS IS'' AND ANY
  * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE GPGTools Project Team BE LIABLE FOR ANY
+ * DISCLAIMED. IN NO EVENT SHALL THE GPGToolz Project Team BE LIABLE FOR ANY
  * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
  * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
  * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
@@ -28,7 +28,9 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#import <MimeBody.h>
+#import "MCMimeBody.h"
+
+@class GMMessageSecurityFeatures, MCMessage;
 
 @interface MimeBody_GPGMail : NSObject
 
@@ -54,28 +56,24 @@
  */
 - (BOOL)MA_isPossiblySignedOrEncrypted;
 
-/**
- Returns true if the PGP encrypted data armor is found in the message body.
- */
-- (BOOL)containsPGPEncryptedData;
+- (void)collectSecurityFeatures;
+- (void)setSecurityFeatures:(GMMessageSecurityFeatures *)securityFeatures;
+- (GMMessageSecurityFeatures *)securityFeatures;
 
-/**
- Returns true if the PGP signed data armor is found in the message body.
- */
-- (BOOL)containsPGPSignedData;
+- (BOOL)mightContainPGPData;
+- (BOOL)mightContainPGPMIMESignedData;
+@end
 
-/**
- Returns true if either the PGP signed data armor or the PGP encrypted
- data armor is found in the message body.
- */
-- (BOOL)containsPGPData;
+@interface MimeBody_GPGMail (MissingInSierra)
+
+- (MCMessage *)GMMessage;
 
 @end
 
-@interface MimeBody_GPGMail (NativeMailMethod)
-
-- (GM_CAST_CLASS(Message *, id))message;
-- (NSData *)bodyData;
-- (GM_CAST_CLASS(MimePart *, id))topLevelPart;
-
-@end
+//@interface MimeBody_GPGMail (NativeMailMethod)
+//
+//- (GM_CAST_CLASS(Message *, id))message;
+//- (NSData *)bodyData;
+//- (GM_CAST_CLASS(MimePart *, id))topLevelPart;
+//
+//@end

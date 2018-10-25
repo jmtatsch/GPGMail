@@ -18,13 +18,13 @@
 "MESSAGE_BANNER_PGP_DECRYPT_SECKEY_ERROR_MESSAGE" = "None of the following secret keys could be found in your keychain (%@). The secret key is needed to decrypt this message. \n\nPlease check with the sender that they used your correct public key.\nCheck any backup of your keychain, and try to import the secret key from there.";
 
 "MESSAGE_BANNER_PGP_DECRYPT_SYSTEM_ERROR_TITLE" = "Salauksen purkaminen epäonnistui tuntemattoman virheen takia!";
-"MESSAGE_BANNER_PGP_DECRYPT_SYSTEM_ERROR_MESSAGE" = "Tuntematon virhe salausta purettaessa.\n\nOle hyvä ja ota yhteyttä meihin osoitteessa https://gpgtools.tenderapp.com";
+"MESSAGE_BANNER_PGP_DECRYPT_SYSTEM_ERROR_MESSAGE" = "Tuntematon virhe salausta purettaessa.\n\nOle hyvä ja ota yhteyttä meihin osoitteessa https://gpgtoolz.tenderapp.com";
 
 "MESSAGE_BANNER_PGP_DECRYPT_GENERAL_ERROR_TITLE" = "Salauksen purkaminen epäonnistui tuntemattoman virheen takia!";
-"MESSAGE_BANNER_PGP_DECRYPT_GENERAL_ERROR_MESSAGE" = "Tuntematon virhe salausta purettaessa.\n\nGPG:n virheilmoitus:\n%@\nOle hyvä ja ota yhteyttä meihin osoitteessa https://gpgtools.tenderapp.com\nLiitä mukaan myös virheilmoituksen teksti.";
+"MESSAGE_BANNER_PGP_DECRYPT_GENERAL_ERROR_MESSAGE" = "Tuntematon virhe salausta purettaessa.\n\nGPG:n virheilmoitus:\n%@\nOle hyvä ja ota yhteyttä meihin osoitteessa https://gpgtoolz.tenderapp.com\nLiitä mukaan myös virheilmoituksen teksti.";
 
 "MESSAGE_BANNER_PGP_DECRYPT_WRONG_SECKEY_ERROR_TITLE" = "Tämä viesti on salattu väärällä avaimella.";
-"MESSAGE_BANNER_PGP_DECRYPT_WRONG_SECKEY_ERROR_MESSAGE" = "Viestiä ei voitu purkaa, koska se on salattu väärällä julkisella avaimella.\n\nOle hyvä ja ota yhteyttä meihin osoitteessa https://gpgtools.tenderapp.com";
+"MESSAGE_BANNER_PGP_DECRYPT_WRONG_SECKEY_ERROR_MESSAGE" = "Viestiä ei voitu purkaa, koska se on salattu väärällä julkisella avaimella.\n\nOle hyvä ja ota yhteyttä meihin osoitteessa https://gpgtoolz.tenderapp.com";
 
 "MESSAGE_BANNER_PGP_DECRYPT_CORRUPTED_DATA_ERROR_TITLE" = "Salattu viesti on vahingoittunut.";
 "MESSAGE_BANNER_PGP_DECRYPT_CORRUPTED_DATA_ERROR_MESSAGE" = "Tämä salattu viesti on vahingoittunut eikä sitä voida purkaa.\n\nOle hyvä ja pyydä lähettäjää lähettämään viesti uudelleen.";
@@ -38,13 +38,13 @@
 "MESSAGE_BANNER_PGP_VERIFY_ALGORITHM_ERROR_MESSAGE" = "Viestiä ei pystytä varmentamaan, koska allekirjoitus on luotu käyttäen algoritmia, jota ei tueta.";
 
 "MESSAGE_BANNER_PGP_VERIFY_BAD_SIGNATURE_ERROR_TITLE" = "HUOMIO: Tämän viestin allekirjoitus on virheellinen!";
-"MESSAGE_BANNER_PGP_VERIFY_BAD_SIGNATURE_ERROR_MESSAGE" = "This message might have been modified after the signature was created.\n\nPlease contact the sender to make sure the content of the message matches the original.\n\nPlease contact us at\nhttps://gpgtools.tenderapp.com/\nif you're sure the message was not modified.";
+"MESSAGE_BANNER_PGP_VERIFY_BAD_SIGNATURE_ERROR_MESSAGE" = "This message might have been modified after the signature was created.\n\nPlease contact the sender to make sure the content of the message matches the original.\n\nPlease contact us at\nhttps://gpgtoolz.tenderapp.com/\nif you're sure the message was not modified.";
 
 "MESSAGE_BANNER_PGP_VERIFY_SYSTEM_ERROR_TITLE" = "Allekirjoituksen varmistus epäonnistui tuntemattoman virheen takia.";
-"MESSAGE_BANNER_PGP_VERIFY_SYSTEM_ERROR_MESSAGE" = "Tuntematon virhe havaittu viestin allekirjoitusta varmennettaessa.\n\nOle hyvä ja ota yhteyttä meihin osoitteessa https://gpgtools.tenderapp.com";
+"MESSAGE_BANNER_PGP_VERIFY_SYSTEM_ERROR_MESSAGE" = "Tuntematon virhe havaittu viestin allekirjoitusta varmennettaessa.\n\nOle hyvä ja ota yhteyttä meihin osoitteessa https://gpgtoolz.tenderapp.com";
 
 "MESSAGE_BANNER_PGP_VERIFY_CORRUPTED_DATA_ERROR_TITLE" = "Viestin allekirjoitus on vaurioitunut!";
-"MESSAGE_BANNER_PGP_VERIFY_CORRUPTED_DATA_ERROR_MESSAGE" = "Tämän viestin allekirjoitus on virheellinen eikä sitä pystytä varmentamaan.\n\nOle hyvä ja ota yhteyttä meihin osoitteessa https://gpgtools.tenderapp.com";
+"MESSAGE_BANNER_PGP_VERIFY_CORRUPTED_DATA_ERROR_MESSAGE" = "Tämän viestin allekirjoitus on virheellinen eikä sitä pystytä varmentamaan.\n\nOle hyvä ja ota yhteyttä meihin osoitteessa https://gpgtoolz.tenderapp.com";
 
 "MESSAGE_BANNER_PGP_VERIFY_KEY_EXPIRED_ERROR_TITLE" = "Allekirjoituksen avain on vanhentunut.";
 "MESSAGE_BANNER_PGP_VERIFY_KEY_EXPIRED_ERROR_MESSAGE" = "Avain, jolla viesti on allekirjoitettu, on vanhentunut.\n\nVoit yrittää ladata avaimen uudelleen, tunnistetiedon ID %@ kanssa,  avainrenkaastasi ja kysyä lähettäjältä vanhentuneen avaimen syytä.";
@@ -53,10 +53,10 @@
 "MESSAGE_BANNER_PGP_VERIFY_SIGNATURE_EXPIRED_ERROR_MESSAGE" = "Allekirjoitus on vanhentunut eikä sitä voida varmentaa.\n\nKysy viestin lähettäjältä syytä vanhentuneeseen allekirjoitukseen";
 
 "MESSAGE_BANNER_PGP_DECRYPT_ERROR_NO_GPG_TITLE" = "MacGPG is not installed";
-"MESSAGE_BANNER_PGP_DECRYPT_ERROR_NO_GPG_MESSAGE" = "Decrypting failed because MacGPG is not installed.\n\nPlease download and re-install GPG Suite from https://gpgtools.org";
+"MESSAGE_BANNER_PGP_DECRYPT_ERROR_NO_GPG_MESSAGE" = "Decrypting failed because MacGPG is not installed.\n\nPlease download and re-install GPG Suite from https://gpgtoolz.org";
 
 "MESSAGE_BANNER_PGP_VERIFY_ERROR_NO_GPG_TITLE" = "MacGPG is not installed";
-"MESSAGE_BANNER_PGP_VERIFY_ERROR_NO_GPG_MESSAGE" = "Verifying failed because MacGPG is not installed.\n\nPlease download and re-install GPG Suite from https://gpgtools.org";
+"MESSAGE_BANNER_PGP_VERIFY_ERROR_NO_GPG_MESSAGE" = "Verifying failed because MacGPG is not installed.\n\nPlease download and re-install GPG Suite from https://gpgtoolz.org";
 
 "MESSAGE_BANNER_PGP_ATTACHMENTS_DECRYPT_VERIFY_ERROR_TITLE" = "%d liitteen salauksen purku tai allekirjoituksen varmistus epäonnistui.";
 "MESSAGE_BANNER_PGP_ATTACHMENTS_DECRYPT_VERIFY_ERROR_MESSAGE" = "Ole hyvä ja paina liitekuvaketta otsakkeen turvallisuusosassa saadaksesi lisätietoja.";
@@ -78,13 +78,13 @@
 "MESSAGE_BANNER_PGP_ATTACHMENT_DECRYPT_SECKEY_ERROR_MESSAGE" = "None of the following secret keys could be found in your keychain (%@). The secret key is needed to decrypt this attachment. \n\nPlease check with the sender that they used your correct public key.\nCheck any backup of your keychain, and try to import the secret key from there.";
 
 "MESSAGE_BANNER_PGP_ATTACHMENT_DECRYPT_SYSTEM_ERROR_TITLE" = "Salauksen purkaminen epäonnistui tuntemattoman virheen takia!";
-"MESSAGE_BANNER_PGP_ATTACHMENT_DECRYPT_SYSTEM_ERROR_MESSAGE" = "Tuntematon virhe ilmeni liitteen salausta purkaessa.\n\nOle hyvä ja ota yhteyttä https://gpgtools.tenderapp.com/";
+"MESSAGE_BANNER_PGP_ATTACHMENT_DECRYPT_SYSTEM_ERROR_MESSAGE" = "Tuntematon virhe ilmeni liitteen salausta purkaessa.\n\nOle hyvä ja ota yhteyttä https://gpgtoolz.tenderapp.com/";
 
 "MESSAGE_BANNER_PGP_ATTACHMENT_DECRYPT_GENERAL_ERROR_TITLE" = "Salauksen purkaminen epäonnistui tuntemattoman virheen takia!";
-"MESSAGE_BANNER_PGP_ATTACHMENT_DECRYPT_GENERAL_ERROR_MESSAGE" = "Tuntematon virhe ilmeni liitteen salausta purkaessa.\n\nGPG virheviesti:\n%@\nOle hyvä ja ota yhteyttä, https://gpgtools.tenderapp.com/ ja liitä virheviesti mukaan";
+"MESSAGE_BANNER_PGP_ATTACHMENT_DECRYPT_GENERAL_ERROR_MESSAGE" = "Tuntematon virhe ilmeni liitteen salausta purkaessa.\n\nGPG virheviesti:\n%@\nOle hyvä ja ota yhteyttä, https://gpgtoolz.tenderapp.com/ ja liitä virheviesti mukaan";
 
 "MESSAGE_BANNER_PGP_ATTACHMENT_DECRYPT_WRONG_SECKEY_ERROR_TITLE" = "Liitteen avaamiseen käytetty väärää avainta.";
-"MESSAGE_BANNER_PGP_ATTACHMENT_DECRYPT_WRONG_SECKEY_ERROR_MESSAGE" = "Liitteen salausta ei pystytty purkamaan, koska väärää avainta on käytetty sen salaamiseksi.\n\nOle hyvä ja ota yhteyttä, https://gpgtools.tenderapp.com/";
+"MESSAGE_BANNER_PGP_ATTACHMENT_DECRYPT_WRONG_SECKEY_ERROR_MESSAGE" = "Liitteen salausta ei pystytty purkamaan, koska väärää avainta on käytetty sen salaamiseksi.\n\nOle hyvä ja ota yhteyttä, https://gpgtoolz.tenderapp.com/";
 
 "MESSAGE_BANNER_PGP_ATTACHMENT_DECRYPT_CORRUPTED_DATA_ERROR_TITLE" = "Salattu liitetiedosto on vaurioitunut.";
 "MESSAGE_BANNER_PGP_ATTACHMENT_DECRYPT_CORRUPTED_DATA_ERROR_MESSAGE" = "Salattu liite on vioittunut ja salausta ei voida purkaa.\n\nPyydä lähettäjää lähetämään viesti uudestaan.";
@@ -96,16 +96,16 @@
 "MESSAGE_BANNER_PGP_ATTACHMENT_VERIFY_NO_PUBKEY_ERROR_MESSAGE" = "The attachment signature could not be verified, since the key which was used to sign is not in your GPG Keychain.\n\nSearch for the key with ID %@ in GPG Keychain and import it to verify the attachment.";
 
 "MESSAGE_BANNER_PGP_ATTACHMENT_VERIFY_ALGORITHM_ERROR_TITLE" = "Liitteen allekirjoitus on luotu käyttämällä algoritmia, jota ei tueta.";
-"MESSAGE_BANNER_PGP_ATTACHMENT_VERIFY_ALGORITHM_ERROR_MESSAGE" = "Liitettä ei voitu varmentaa, koska allekirjoitukseen käytetty avain on luotu käyttäen suojausalgoritmia jota ei tueta.\n\nOle hyvä ja ota yhteyttä tukipalveluun osoitteessa  https://gpgtools.tenderapp.com";
+"MESSAGE_BANNER_PGP_ATTACHMENT_VERIFY_ALGORITHM_ERROR_MESSAGE" = "Liitettä ei voitu varmentaa, koska allekirjoitukseen käytetty avain on luotu käyttäen suojausalgoritmia jota ei tueta.\n\nOle hyvä ja ota yhteyttä tukipalveluun osoitteessa  https://gpgtoolz.tenderapp.com";
 
 "MESSAGE_BANNER_PGP_ATTACHMENT_VERIFY_BAD_SIGNATURE_ERROR_TITLE" = "HUOMIO: Liitteen allekirjoitus on epäkelpo.";
-"MESSAGE_BANNER_PGP_ATTACHMENT_VERIFY_BAD_SIGNATURE_ERROR_MESSAGE" = "This attachment might have been modified after the signature was created.\n\nPlease contact the sender and make sure the content of the attachment matches the original.\n\nPlease contact us at\nhttps://gpgtools.tenderapp.com/\n if you're sure the attachment was not modified.";
+"MESSAGE_BANNER_PGP_ATTACHMENT_VERIFY_BAD_SIGNATURE_ERROR_MESSAGE" = "This attachment might have been modified after the signature was created.\n\nPlease contact the sender and make sure the content of the attachment matches the original.\n\nPlease contact us at\nhttps://gpgtoolz.tenderapp.com/\n if you're sure the attachment was not modified.";
 
 "MESSAGE_BANNER_PGP_ATTACHMENT_VERIFY_SYSTEM_ERROR_TITLE" = "Allekirjoituksen varmentaminen epäonnistui tuntemattomasta virheestä johtuen!";
-"MESSAGE_BANNER_PGP_ATTACHMENT_VERIFY_SYSTEM_ERROR_MESSAGE" = "An unknown error occurred while verifying this attachment signature.\n\nPlease contact us at https://gpgtools.tenderapp.com/";
+"MESSAGE_BANNER_PGP_ATTACHMENT_VERIFY_SYSTEM_ERROR_MESSAGE" = "An unknown error occurred while verifying this attachment signature.\n\nPlease contact us at https://gpgtoolz.tenderapp.com/";
 
 "MESSAGE_BANNER_PGP_ATTACHMENT_VERIFY_CORRUPTED_DATA_ERROR_TITLE" = "Allekirjoitus on vaurioitunut!";
-"MESSAGE_BANNER_PGP_ATTACHMENT_VERIFY_CORRUPTED_DATA_ERROR_MESSAGE" = "Liitetteen allekirjoitus on epäkelpo eikä sitä voitu varmentaa.\n\nOle hyvä ja ota yhteyttä tukipalveluun osoitteessa  https://gpgtools.tenderapp.com";
+"MESSAGE_BANNER_PGP_ATTACHMENT_VERIFY_CORRUPTED_DATA_ERROR_MESSAGE" = "Liitetteen allekirjoitus on epäkelpo eikä sitä voitu varmentaa.\n\nOle hyvä ja ota yhteyttä tukipalveluun osoitteessa  https://gpgtoolz.tenderapp.com";
 
 "MESSAGE_BANNER_PGP_ATTACHMENT_VERIFY_KEY_EXPIRED_ERROR_TITLE" = "Allekirjoituksen avain on vanhentunut.";
 "MESSAGE_BANNER_PGP_ATTACHMENT_VERIFY_KEY_EXPIRED_ERROR_MESSAGE" = "The key which was used to sign this attachment is expired.\n\nYou can try to refresh the key with ID %@ in GPG Keychain and ask the sender why the key is expired.";
@@ -145,12 +145,12 @@
 "MESSAGE_VIEW_PGP_PART" = "PGP-osa";
 
 /* GPGMail Preferences strings. */
-"GPG_STATUS_NO_ERROR_TITLE" = "GPGMail on valmis.";
-"GPG_STATUS_NO_ERROR_TOOLTIP" = "MacGPG asentaminen on käynnissä virheettömästi.";
-"GPG_STATUS_NOT_FOUND_TITLE" = "MacGPG is not installed. Check your installation.";
-"GPG_STATUS_NOT_FOUND_TOOLTIP" = "Please download and re-install GPG Suite from https://www.gpgtools.org to ensure all required components are installed.";
-"GPG_STATUS_OTHER_ERROR_TITLE" = "Tarkista asennuksesi ja asetuksesi, ole hyvä.";
-"GPG_STATUS_NOT_FOUND_TOOLTIP" = "Please download and re-install GPG Suite from https://www.gpgtools.org to ensure all required components are installed.";
+"GPG_STATUS_NO_ERROR_TITLE" = "GPGMail ready";
+"GPG_STATUS_NOT_FOUND_TITLE" = "MacGPG not found, reinstall GPG Suite";
+"GPG_STATUS_NOT_FOUND_TOOLTIP" = "Click indicator bubble for further information";
+"GPG_STATUS_OTHER_ERROR_TITLE" = "Problems found, click indicator bubble for more info";
+"GPG_STATUS_OTHER_ERROR_TOOLTIP" = "Click indicator bubble for further information";
+
 "DISABLE_ENCRYPT_DRAFTS_TITLE" = "Varoitus: Tämän toiminnan pois päältä kytkeminen voi mahdollistaa arkaluonteisen tiedon vuotamisen uutta viestiä luodessa.";
 "DISABLE_ENCRYPT_DRAFTS_MESSAGE" = "If the option \"Store drafts on server\" is enabled for your accounts, macOS Mail automatically stores your drafts on your mail server while you're composing a message.\nBy disabling \"Encrypt drafts\", your drafts will be stored in plain text (not encrypted) so that anyone with access to the mail server can read them.\n\nIf you keep \"Encrypt drafts\" enabled, your drafts will be encrypted before they are stored on a mail server and only you will be able to read them.\n\nDo you still want to disable \"Encrypt drafts\"?";
 "DISABLE_ENCRYPT_DRAFTS_CONFIRM" = "Kytke salaus pois";
@@ -164,25 +164,25 @@
 
 /* No Libmacgpg. */
 "LIBMACGPG_NOT_FOUND_TITLE" = "Libmacgpg -kirjastoa ei löydy";
-"LIBMACGPG_NOT_FOUND_MESSAGE" = "Libmacgpg was not found on your system. Please download and install GPG Suite from https://www.gpgtools.org.";
+"LIBMACGPG_NOT_FOUND_MESSAGE" = "Libmacgpg was not found on your system. Please download and install GPG Suite from https://www.gpgtoolz.org.";
 
 /* Code signature invalid */
 CODE_SIGN_ERROR_TITLE = "Joku peruutti GPGMail-ohjelman asennuksesi!";
-CODE_SIGN_ERROR_MESSAGE = "To keep you safe, GPGMail will not be loaded!\n\nPlease re-install GPG Suite from https://gpgtools.org to be sure you have an original version from us!";
+CODE_SIGN_ERROR_MESSAGE = "To keep you safe, GPGMail will not be loaded!\n\nPlease re-install GPG Suite from https://gpgtoolz.org to be sure you have an original version from us!";
 
 /* GPGMailGPGMailBundle.defaults can't be loaded */
 NO_DEFAULTS_TITLE = "GPGMail -ohjelman oletusasetuksia ei pystytty lataamaan!";
-NO_DEFAULTS_MESSAGE = "GPGMail ei toimi odotetusti.\n\nOle hyvä ja asenna GPG Suite uudelleen, osoitteesta https://gpgtools.org.\n\nJos ongelma jatkuu, ota yhteyttä tukipalveluun osoitteessa  https://gpgtools.tenderapp.com.";
+NO_DEFAULTS_MESSAGE = "GPGMail ei toimi odotetusti.\n\nOle hyvä ja asenna GPG Suite uudelleen, osoitteesta https://gpgtoolz.org.\n\nJos ongelma jatkuu, ota yhteyttä tukipalveluun osoitteessa  https://gpgtoolz.tenderapp.com.";
 
 /* Errors while trying to sign a message. */
 "MESSAGE_SIGNING_ERROR_NO_PINENTRY_TITLE" = "Viestin allekirjoitus epäonnistui, koska avaintunnuslauseen kysely ei toimi.";
-"MESSAGE_SIGNING_ERROR_NO_PINENTRY_DESCRIPTION" = "Avaintunnuslauseen kyselytoiminne on rikki. Jos ongelma jatkuu, voit koettaa uudelleenasentaa GPG Suite -ohjelmiston osoitteesta https://gpgtools.org.";
+"MESSAGE_SIGNING_ERROR_NO_PINENTRY_DESCRIPTION" = "Avaintunnuslauseen kyselytoiminne on rikki. Jos ongelma jatkuu, voit koettaa uudelleenasentaa GPG Suite -ohjelmiston osoitteesta https://gpgtoolz.org.";
 
 "MESSAGE_SIGNING_ERROR_NO_AGENT_TITLE" = "Signing your message failed due to defect GPG agent!";
-"MESSAGE_SIGNING_ERROR_NO_AGENT_DESCRIPTION" = "The GPG agent which is a crucial part of GPG seems to be broken.\n\nTo fix this problem, re-install GPG Suite from https://gpgtools.org.";
+"MESSAGE_SIGNING_ERROR_NO_AGENT_DESCRIPTION" = "The GPG agent which is a crucial part of GPG seems to be broken.\n\nTo fix this problem, re-install GPG Suite from https://gpgtoolz.org.";
 
 "MESSAGE_SIGNING_ERROR_AGENT_ERROR_TITLE" = "Signing your message failed due to GPG agent communication error!";
-"MESSAGE_SIGNING_ERROR_AGENT_ERROR_DESCRIPTION" = "It was not possible to talk to the GPG agent in order to request your password.\n\nTo fix this problem, re-install GPG Suite from https://gpgtools.org.";
+"MESSAGE_SIGNING_ERROR_AGENT_ERROR_DESCRIPTION" = "It was not possible to talk to the GPG agent in order to request your password.\n\nTo fix this problem, re-install GPG Suite from https://gpgtoolz.org.";
 
 "MESSAGE_SIGNING_ERROR_UNKNOWN_ERROR_TITLE" = "Viestin allekirjoitus epäonnistui tuntemattoman virheen takia";
 "MESSAGE_SIGNING_ERROR_UNKNOWN_ERROR_DESCRIPTION" = "Unfortunately we can't handle the error at this point.";
@@ -193,7 +193,7 @@ NO_DEFAULTS_MESSAGE = "GPGMail ei toimi odotetusti.\n\nOle hyvä ja asenna GPG S
 "MESSAGE_SIGNING_ERROR_WRONG_PASSPHRASE_TITLE" = "Annoit väärän salasanan liian monta kertaa.";
 "MESSAGE_SIGNING_ERROR_WRONG_PASSPHRASE_DESCRIPTION" = "Signing your message was aborted because you entered the wrong password 3 times.";
 
-"CONTACT_GPGTOOLS_WITH_INFO_MESSAGE" = "\n\nShould your problem persist, please contact us at https://gpgtools.tenderapp.com/ with the following error description:\n\n%@";
+"CONTACT_GPGTOOLS_WITH_INFO_MESSAGE" = "\n\nShould your problem persist, please contact us at https://gpgtoolz.tenderapp.com/ with the following error description:\n\n%@";
 
 "MESSAGE_BANNER_PGP_DECRYPT_ERROR_PASSPHRASE_REQUEST_CANCELLED_TITLE" = "You aborted the decryption of the message";
 "MESSAGE_BANNER_PGP_DECRYPT_ERROR_PASSPHRASE_REQUEST_CANCELLED_MESSAGE" = "The message couldn't be decrypted because you cancelled the password request.";
@@ -202,28 +202,28 @@ NO_DEFAULTS_MESSAGE = "GPGMail ei toimi odotetusti.\n\nOle hyvä ja asenna GPG S
 "MESSAGE_BANNER_PGP_ATTACHMENT_DECRYPT_ERROR_PASSPHRASE_REQUEST_CANCELLED_MESSAGE" = "Liitteen salausta ei purettu koska peruit salasanakyselyn.";
 
 "MESSAGE_BANNER_PGP_DECRYPT_ERROR_XPC_DAMAGED_TITLE" = "GPG Suite ei toimi odotetulla tavalla.";
-"MESSAGE_BANNER_PGP_DECRYPT_ERROR_XPC_DAMAGED_MESSAGE" = "Viestin salauksen purku epäonnistui.\n\nOle hyvä ja asenna GPG Suite uudelleen, osoitteesta https://gpgtools.org.\n\nJos ongelma jatkuu, ota yhteyttä tukipalveluun osoitteessa  https://gpgtools.tenderapp.com ja anna ongelmaraportissa tieto \"xpc service is not working properly\".";
+"MESSAGE_BANNER_PGP_DECRYPT_ERROR_XPC_DAMAGED_MESSAGE" = "Viestin salauksen purku epäonnistui.\n\nOle hyvä ja asenna GPG Suite uudelleen, osoitteesta https://gpgtoolz.org.\n\nJos ongelma jatkuu, ota yhteyttä tukipalveluun osoitteessa  https://gpgtoolz.tenderapp.com ja anna ongelmaraportissa tieto \"xpc service is not working properly\".";
 
 "MESSAGE_BANNER_PGP_ATTACHMENT_DECRYPT_ERROR_XPC_DAMAGED_TITLE" = "GPG Suite ei toimi odotetulla tavalla.";
-"MESSAGE_BANNER_PGP_ATTACHMENT_DECRYPT_ERROR_XPC_DAMAGED_MESSAGE" = "Liitteen salauksen purku epäonnistui.\n\nOle hyvä ja asenna GPG Suite uudelleen, osoitteesta https://gpgtools.org.\n\nJos ongelma jatkuu, ota yhteyttä tukipalveluun osoitteessa  https://gpgtools.tenderapp.com ja anna ongelmaraportissa tieto \"xpc service is not working properly\".";
+"MESSAGE_BANNER_PGP_ATTACHMENT_DECRYPT_ERROR_XPC_DAMAGED_MESSAGE" = "Liitteen salauksen purku epäonnistui.\n\nOle hyvä ja asenna GPG Suite uudelleen, osoitteesta https://gpgtoolz.org.\n\nJos ongelma jatkuu, ota yhteyttä tukipalveluun osoitteessa  https://gpgtoolz.tenderapp.com ja anna ongelmaraportissa tieto \"xpc service is not working properly\".";
 
 "MESSAGE_BANNER_PGP_VERIFY_ERROR_XPC_DAMAGED_TITLE" = "GPG Suite ei toimi odotetulla tavalla.";
-"MESSAGE_BANNER_PGP_VERIFY_ERROR_XPC_DAMAGED_MESSAGE" = "Viestin varmennus epäonnistui.\n\nOle hyvä ja asenna GPG Suite uudelleen, osoitteesta https://gpgtools.org.\n\nJos ongelma jatkuu, ota yhteyttä tukipalveluun osoitteessa  https://gpgtools.tenderapp.com ja anna ongelmaraportissa tieto \"xpc service is not working properly\".";
+"MESSAGE_BANNER_PGP_VERIFY_ERROR_XPC_DAMAGED_MESSAGE" = "Viestin varmennus epäonnistui.\n\nOle hyvä ja asenna GPG Suite uudelleen, osoitteesta https://gpgtoolz.org.\n\nJos ongelma jatkuu, ota yhteyttä tukipalveluun osoitteessa  https://gpgtoolz.tenderapp.com ja anna ongelmaraportissa tieto \"xpc service is not working properly\".";
 
 "MESSAGE_BANNER_PGP_ATTACHMENT_VERIFY_ERROR_XPC_DAMAGED_TITLE" = "GPG Suite ei toimi odotetulla tavalla.";
-"MESSAGE_BANNER_PGP_ATTACHMENT_VERIFY_ERROR_XPC_DAMAGED_MESSAGE" = "Liitteen varmennus epäonnistui.\n\nOle hyvä ja asenna GPG Suite uudelleen, osoitteesta https://gpgtools.org.\n\nJos ongelma jatkuu, ota yhteyttä tukipalveluun osoitteessa  https://gpgtools.tenderapp.com ja anna ongelmaraportissa tieto \"xpc service is not working properly\".";
+"MESSAGE_BANNER_PGP_ATTACHMENT_VERIFY_ERROR_XPC_DAMAGED_MESSAGE" = "Liitteen varmennus epäonnistui.\n\nOle hyvä ja asenna GPG Suite uudelleen, osoitteesta https://gpgtoolz.org.\n\nJos ongelma jatkuu, ota yhteyttä tukipalveluun osoitteessa  https://gpgtoolz.tenderapp.com ja anna ongelmaraportissa tieto \"xpc service is not working properly\".";
 
 "MESSAGE_SIGNING_ERROR_PINENTRY_CRASH_TITLE" = "Viestin allekirjoitus epäonnistui salasanakyselyn aikana ilmenneen ongelman takia.";
-"MESSAGE_SIGNING_ERROR_PINENTRY_CRASH_DESCRIPTION" = "Avaintunnuslauseen kysely ei toimi. Jos ongelma jatkuu, kokeile uudelleenasentaa GPG Suite - ohjelmisto osoitteesta https://gpgtools.org";
+"MESSAGE_SIGNING_ERROR_PINENTRY_CRASH_DESCRIPTION" = "Avaintunnuslauseen kysely ei toimi. Jos ongelma jatkuu, kokeile uudelleenasentaa GPG Suite - ohjelmisto osoitteesta https://gpgtoolz.org";
 
 "MESSAGE_SIGNING_ERROR_XPC_DAMAGED_TITLE" = "Viestin allekirjoitus epäonnistui rikkinäisen GPGMail-asennuksen takia.";
-"MESSAGE_SIGNING_ERROR_XPC_DAMAGED_DESCRIPTION" = "Korjaa ongelma asentamalla GPG Suite uudelleen, osoitteesta https://gpgtools.org.\n\nJos ongelma jatkuu, ota yhteyttä tukipalveluun osoitteessa  https://gpgtools.tenderapp.com ja anna ongelmaraportissa tieto \"xpc service is not working properly\".";
+"MESSAGE_SIGNING_ERROR_XPC_DAMAGED_DESCRIPTION" = "Korjaa ongelma asentamalla GPG Suite uudelleen, osoitteesta https://gpgtoolz.org.\n\nJos ongelma jatkuu, ota yhteyttä tukipalveluun osoitteessa  https://gpgtoolz.tenderapp.com ja anna ongelmaraportissa tieto \"xpc service is not working properly\".";
 
 "MESSAGE_BANNER_PGP_DECRYPT_ERROR_PINENTRY_CRASHED_TITLE" = "Viestin salauksen purku epäonnistui, koska avaintunnuslauseen kysely ei toimi.";
-"MESSAGE_BANNER_PGP_DECRYPT_ERROR_PINENTRY_CRASHED_MESSAGE" = "Avaintunnuslauseen kyselytoiminne on rikki. Jos ongelma jatkuu, voit koettaa uudelleenasentaa GPG Suite -ohjelmiston osoitteesta https://gpgtools.org.";
+"MESSAGE_BANNER_PGP_DECRYPT_ERROR_PINENTRY_CRASHED_MESSAGE" = "Avaintunnuslauseen kyselytoiminne on rikki. Jos ongelma jatkuu, voit koettaa uudelleenasentaa GPG Suite -ohjelmiston osoitteesta https://gpgtoolz.org.";
 
 "MESSAGE_BANNER_PGP_ATTACHMENT_DECRYPT_ERROR_PINENTRY_CRASHED_TITLE" = "Viestin salauksen purku epäonnistui, koska avaintunnuslauseen kyselyssä on virhe.";
-"MESSAGE_BANNER_PGP_ATTACHMENT_DECRYPT_ERROR_PINENTRY_CRASHED_MESSAGE" = "Avaintunnuslauseen kyselytoiminne on rikki. Jos ongelma jatkuu, voit koettaa uudelleenasentaa GPG Suite -ohjelmiston osoitteesta https://gpgtools.org.";
+"MESSAGE_BANNER_PGP_ATTACHMENT_DECRYPT_ERROR_PINENTRY_CRASHED_MESSAGE" = "Avaintunnuslauseen kyselytoiminne on rikki. Jos ongelma jatkuu, voit koettaa uudelleenasentaa GPG Suite -ohjelmiston osoitteesta https://gpgtoolz.org.";
 
 "UNENCRYPTED_REPLY_TO_ENCRYPTED_MESSAGE_TITLE" = "Huomio: Olet lähettämässä, salattuun viestiin, salaamatonta vastausta.";
 "UNENCRYPTED_REPLY_TO_ENCRYPTED_MESSAGE_MISSING_KEYS_SINGULAR" = "Vastausta ei voida salata, koska ao. vastaanottajan julkista avainta ei löydy: \n\n%@";
@@ -244,6 +244,16 @@ NO_DEFAULTS_MESSAGE = "GPGMail ei toimi odotetusti.\n\nOle hyvä ja asenna GPG S
 "UNENCRYPTED_FORWARD_OF_ENCRYPTED_MESSAGE_BUTTON_SEND_ANYWAY" = "Forward Anyway";
 "UNENCRYPTED_FORWARD_OF_ENCRYPTED_MESSAGE_BUTTON_CANCEL" = "Peruuta";
 
+"MESSAGE_BANNER_PGP_DECRYPT_MDC_ERROR_TITLE" = "Decryption of the message was aborted";
+"MESSAGE_BANNER_PGP_DECRYPT_MDC_ERROR_MESSAGE" = "The modification detection code (MDC) for this encrypted message is missing or has been modified.\n\nThis could mean that an attacker has been trying to modify the contents within the encrypted message.\n\nPlease have the message re-sent to you and tell the sender, that their encrypted message didn't include a modification detection code.";
+
+"NAVIGATION_ACTION_FROM_ENCRYPTED_MESSAGE_TITLE" = "Attention: Opening this website could leak the contents of this message";
+"NAVIGATION_ACTION_FROM_ENCRYPTED_MESSAGE_MESSAGE" = "Due to a problem in the implementation of S/MIME encryption, it is possible for an attacker to modify a message without your knowledge.\n\nYou are about to open the following website:\n\n%@\n\nAre you sure you want to continue?";
+"NAVIGATION_ACTION_FROM_ENCRYPTED_MESSAGE_BUTTON_YES" = "Yes";
+"NAVIGATION_ACTION_FROM_ENCRYPTED_MESSAGE_BUTTON_CANCEL" = "Peruuta";
+
+"MESSAGE_BANNER_PGP_ATTACHMENT_DECRYPT_MDC_ERROR_TITLE" = "Decryption of the attachment was aborted";
+"MESSAGE_BANNER_PGP_ATTACHMENT_DECRYPT_MDC_ERROR_MESSAGE" = "The modification detection code (MDC) for this encrypted attachment is missing or has been modified.\n\nThis could mean that an attacker has been trying to modify the contents within the encrypted attachment.\n\nPlease have the attachment re-sent to you and tell the sender, that their encrypted attachment didn't include a modification detection code.";
 
 
 /* Accessibility */

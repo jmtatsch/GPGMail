@@ -2,7 +2,7 @@
 /* GPGMailBundle.h re-created by Lukas Pitschl (@lukele) on Fri 14-Jun-2013 */
 
 /*
- * Copyright (c) 2000-2013, GPGTools Project Team <gpgtools-devel@lists.gpgtools.org>
+ * Copyright (c) 2000-2013, GPGToolz Project Team <gpgtoolz-devel@lists.gpgtoolz.org>
  * All rights reserved.
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -12,14 +12,14 @@
  *     * Redistributions in binary form must reproduce the above copyright
  *       notice, this list of conditions and the following disclaimer in the
  *       documentation and/or other materials provided with the distribution.
- *     * Neither the name of GPGTools Project Team nor the names of GPGMail
+ *     * Neither the name of GPGToolz Project Team nor the names of GPGMail
  *       contributors may be used to endorse or promote products
  *       derived from this software without specific prior written permission.
  *
- * THIS SOFTWARE IS PROVIDED BY THE GPGTools Project Team ``AS IS'' AND ANY
+ * THIS SOFTWARE IS PROVIDED BY THE GPGToolz Project Team ``AS IS'' AND ANY
  * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE GPGTools Project Team BE LIABLE FOR ANY
+ * DISCLAIMED. IN NO EVENT SHALL THE GPGToolz Project Team BE LIABLE FOR ANY
  * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
  * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
  * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
@@ -30,13 +30,21 @@
 
 #import <CoreFoundation/CoreFoundation.h>
 #import <Libmacgpg/Libmacgpg.h>
+#import "GMSupportPlanAssistantWindowController.h"
+
+#if !__has_feature(nullability)
+#define nullable
+#endif
+
+
+
 
 extern NSString *GPGMailKeyringUpdatedNotification;
 extern NSString *gpgErrorIdentifier; // This identifier is used to set and find GPGErrorCodes in NSData.
 
 @class Message, GMMessageRulesApplier, GMKeyManager;
 
-@interface GPGMailBundle : NSObject <NSToolbarDelegate> {
+@interface GPGMailBundle : NSObject <NSToolbarDelegate, GMSupportPlanAssistantDelegate> {
     GMMessageRulesApplier *_messageRulesApplier;
     
     NSMutableArray *_bundleImages;
@@ -49,6 +57,9 @@ extern NSString *gpgErrorIdentifier; // This identifier is used to set and find 
     BOOL _warnedAboutMissingPrivateKeys;
     
 	GPGErrorCode gpgStatus;
+
+    NSOperationQueue *_messageBodyDataLoadingQueue;
+    NSCache *_messageBodyDataLoadingCache;
 }
 
 /**
@@ -91,6 +102,9 @@ extern NSString *gpgErrorIdentifier; // This identifier is used to set and find 
 + (BOOL)isYosemite;
 + (BOOL)isLion;
 + (BOOL)isElCapitan;
++ (BOOL)isSierra;
++ (BOOL)isHighSierra;
++ (BOOL)isMojave;
 
 /**
  Schedules a message which should have rules applied.
@@ -161,9 +175,29 @@ extern NSString *gpgErrorIdentifier; // This identifier is used to set and find 
  */
 + (id)backEndFromObject:(id)object;
 
++ (NSError *)errorWithCode:(NSInteger)code userInfo:(nullable NSDictionary *)userInfo;
+
++ (NSString *)preferencesPanelName;
+
+/**
+ * Support contract methods
+ */
+- (void)checkSupportContractAndStartWizardIfNecessary;
+- (void)startSupportContractWizard;
+- (BOOL)hasActiveContract;
+- (BOOL)hasActiveContractOrActiveTrial;
+- (NSNumber *)remainingTrialDays;
+- (NSDictionary *)fetchContractInformation;
+
 @property (readonly) GPGErrorCode gpgStatus;
 @property (readonly, strong) NSSet *allGPGKeys;
 @property (nonatomic, assign) BOOL accountExistsForSigning;
+
+@property (readonly) NSOperationQueue *messageBodyDataLoadingQueue;
+@property (readonly) NSCache *messageBodyDataLoadingCache;
+
+@property (readonly) BOOL allowDecryptionOfPotentiallyDangerousMessagesWithoutMDC;
+@property (readonly) BOOL shouldNotConvertPGPPartitionedMessages;
 
 @end
 

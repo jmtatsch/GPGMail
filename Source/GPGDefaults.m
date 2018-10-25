@@ -17,8 +17,8 @@
 
 #import "GPGDefaults.h"
 
-NSString *gpgDefaultsDomain = @"org.gpgtools.common";
-NSString *GPGDefaultsUpdatedNotification = @"org.gpgtools.GPGDefaultsUpdatedNotification";
+NSString *gpgDefaultsDomain = @"org.gpgtoolz.common";
+NSString *GPGDefaultsUpdatedNotification = @"org.gpgtoolz.GPGDefaultsUpdatedNotification";
 
 @interface GPGDefaults (Private)
 - (void)refreshDefaults;
@@ -239,7 +239,7 @@ static NSMutableDictionary *_sharedInstances = nil;
 	[_defaultsLock unlock];
 
 	NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:_domain, @"domain", [NSNumber numberWithInteger:(NSInteger)self], @"sender", nil];
-	[[NSDistributedNotificationCenter defaultCenter] postNotificationName:GPGDefaultsUpdatedNotification object:@"org.gpgtools.GPGDefaults" userInfo:userInfo];
+	[[NSDistributedNotificationCenter defaultCenter] postNotificationName:GPGDefaultsUpdatedNotification object:@"org.gpgtoolz.GPGDefaults" userInfo:userInfo];
 }
 
 - (void)defaultsDidUpdated:(NSNotification *)notification {

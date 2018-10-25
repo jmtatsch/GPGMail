@@ -2,7 +2,7 @@
 /* MimePart+GPGMail.h re-created by Lukas Pitschl (@lukele) on Wed 03-Aug-2011 */
 
 /*
- * Copyright (c) 2000-2011, GPGTools Project Team <gpgtools-devel@lists.gpgtools.org>
+ * Copyright (c) 2000-2011, GPGToolz Project Team <gpgtoolz-devel@lists.gpgtoolz.org>
  * All rights reserved.
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -12,14 +12,14 @@
  *     * Redistributions in binary form must reproduce the above copyright
  *       notice, this list of conditions and the following disclaimer in the
  *       documentation and/or other materials provided with the distribution.
- *     * Neither the name of GPGTools Project Team nor the names of GPGMail
+ *     * Neither the name of GPGToolz Project Team nor the names of GPGMail
  *       contributors may be used to endorse or promote products
  *       derived from this software without specific prior written permission.
  *
- * THIS SOFTWARE IS PROVIDED BY THE GPGTools Project Team ``AS IS'' AND ANY
+ * THIS SOFTWARE IS PROVIDED BY THE GPGToolz Project Team ``AS IS'' AND ANY
  * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE GPGTools Project Team BE LIABLE FOR ANY
+ * DISCLAIMED. IN NO EVENT SHALL THE GPGToolz Project Team BE LIABLE FOR ANY
  * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
  * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
  * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
@@ -28,10 +28,16 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#import <MimePart.h>
 #import <Libmacgpg/Libmacgpg.h>
 
+#import "MCMimePart.h"
+#import "GMContentPartsIsolator.h"
+
 @class MimeBody;
+@class MCMessage;
+@class GMMessageSecurityFeatures;
+@class MCAttachment;
+@class GMMessageProtectionStatus;
 
 #define PGP_ATTACHMENT_EXTENSION @"pgp"
 #define PGP_PART_MARKER_START @"::gpgmail-start-pgp-part::"
@@ -64,7 +70,7 @@ enum {
 
 @class MFMimeDecodeContext, _NSDataMessageStoreMessage;
 
-@interface MimePart_GPGMail : NSObject
+@interface MimePart_GPGMail : NSObject<GMContentPartsIsolatorDelegate>
 
 @property (assign) BOOL PGPEncrypted;
 @property (assign) BOOL PGPPartlyEncrypted;
@@ -74,10 +80,10 @@ enum {
 @property (assign) BOOL PGPVerified;
 @property (assign) BOOL PGPAttachment;
 @property (retain) NSArray *PGPSignatures;
-@property (retain) MFError *PGPError;
-@property (retain) NSData *PGPDecryptedData;
-@property (retain) MessageBody *PGPDecryptedBody;
-@property (retain) NSString *PGPDecryptedContent;
+@property (retain) NSError *PGPError;
+//@property (retain) NSData *PGPDecryptedData;
+//@property (retain) MCMimeBody *PGPDecryptedBody;
+//@property (retain) NSString *PGPDecryptedContent;
 @property (retain) NSString *PGPVerifiedContent;
 @property (retain) NSData *PGPVerifiedData;
 
@@ -102,14 +108,14 @@ enum {
 /**
  * Loops through all mime parts and runs a block on them.
  */
-- (void)enumerateSubpartsWithBlock:(void (^)(MimePart *))partBlock;
+- (void)enumerateSubpartsWithBlock:(void (^)(MCMimePart *))partBlock;
 
 /**
  Calling topLevelPart on the mimeBody forces the parts to be regenerated.
  This way it's possible to access the top level part by walking up
  the mime part tree avoiding the regeneration.
  */
-- (MimePart *)topPart;
+- (MCMimePart *)topPart;
 
 /**
  Is called for every text/plain part. Firt checks if it contains any encrypted or
@@ -190,14 +196,14 @@ enum {
  Checks the GPGController for decryption errors and returns the appropriate
  error message.
  */
-- (MFError *)errorFromDecryptionOperation:(GPGController *)gpgc;
+- (NSError *)errorFromDecryptionOperation:(GPGController *)gpgc;
 
 
 /**
  Checks the GPGController for verification errors and returns the appropriate
  error message.
  */
-- (MFError *)errorFromVerificationOperation:(GPGController *)gpgc;
+- (NSError *)errorFromVerificationOperation:(GPGController *)gpgc;
 
 /**
  Helper method to process GPGController NODATA errors.
@@ -229,7 +235,7 @@ enum {
 /**
  Creates a new message similar the way S/MIME does it, from the decryptedData.
  */
-- (MimeBody *)decryptedMessageBodyFromDecryptedData:(NSData *)decryptedData;
+//- (MCMimeBody *)decryptedMessageBodyFromDecryptedData:(NSData *)decryptedData;
 
 /**
  Returns the complete part data but replaces the encrypted data with the decrypted
@@ -322,7 +328,7 @@ enum {
 /**
  Create a new message text/plain message for decrypted pgp inline data.
  */
-- (Message *)messageWithMessageData:(NSData *)messageData;
+- (MCMessage *)messageWithMessageData:(NSData *)messageData;
 
 /**
  Is called when the decrypted body is supposed to be cleared.
@@ -342,6 +348,8 @@ enum {
  */
 - (id)MANewEncryptedPartWithData:(NSData *)data recipients:(id)recipients encryptedData:(NSData **)encryptedData NS_RETURNS_RETAINED;
 
+- (id)newEncryptedPartWithData:(NSData *)data certificates:(id)certificates partData:(__autoreleasing NSMapTable **)partData;
+
 /**
  Like newEncryptedPartWithData (see above), this method is called from MessageWriter
  too when creating the outgoing message and shouldSign is set to true.
@@ -353,6 +361,12 @@ enum {
  to the *signatureData pointer. 
  */
 - (id)MANewSignedPartWithData:(id)data sender:(id)sender signatureData:(id *)signatureData NS_RETURNS_RETAINED;
+
+/**
+  Replaces the hook into -[MCMimePart newSignedPartWithData:sender:signatureData:] which is no longer
+  necessary/used on Sierra.
+*/
+- (id)newSignedPartWithData:(NSData *)data sender:(NSString *)sender signingKey:(GPGKey *)signingKey signatureData:(id *)signatureData;
 
 /**
  Get the (autoreleased) data for a new PGP/Inline signed message.
@@ -372,23 +386,41 @@ enum {
  */
 - (void)failedToEncryptForRecipients:(NSArray *)recipients gpgErrorCode:(GPGErrorCode)errorCode error:(NSException *)error;
 
+- (BOOL)shouldBePGPProcessed;
+
+- (MCMimePart *)decryptedTopLevelMimePart;
+- (GMMessageSecurityFeatures *)securityFeatures;
+
+- (BOOL)mightContainPGPMIMESignedData;
+- (BOOL)mightContainPGPData;
+
+- (MCAttachment *)GMEncryptedPartAsMessageAttachment;
+- (GMMessageProtectionStatus *)GMMessageProtectionStatus;
+
+- (BOOL)GMIsEncryptedPGPMIMETree;
+
+- (NSString *)contentPartsIsolator:(GMContentPartsIsolator *)isolator alternativeContentForIsolatedPart:(GMIsolatedContentPart *)isolatedPart messageBody:(MCMessageBody *)messageBody;
+- (BOOL)isContentThatNeedsIsolationAvailableForContentPartsIsolator:(GMContentPartsIsolator *)isolator;
+
 @end
 
 @interface MimePart_GPGMail (MailMethods)
 
-- (MimeBody *)mimeBody;
-- (MimePart *)parentPart;
-- (NSData *)bodyData;
-- (id)dispositionParameterForKey:(NSString *)key;
-- (BOOL)isType:(NSString *)type subtype:(NSString *)subtype;
-- (id)bodyParameterForKey:(NSString *)key;
-- (NSArray *)subparts;
-- (id)decryptedMessageBody;
-- (void)setDispositionParameter:(id)parameter forKey:(id)key;
-- (BOOL)isAttachment;
-- (NSData *)signedData;
-- (NSString *)type;
-- (NSString *)subtype;
-- (id)contentTransferEncoding;
+//- (MCMimePart *)parentPart;
+//- (NSData *)bodyData;
+//- (id)dispositionParameterForKey:(NSString *)key;
+//- (BOOL)isType:(NSString *)type subtype:(NSString *)subtype;
+//- (id)bodyParameterForKey:(NSString *)key;
+//- (NSArray *)subparts;
+//- (id)decryptedMessageBody;
+//- (void)setDispositionParameter:(id)parameter forKey:(id)key;
+//- (BOOL)isAttachment;
+//- (NSData *)signedData;
+//- (NSString *)type;
+//- (NSString *)subtype;
+//- (id)contentTransferEncoding;
+//
+//- (id)dataSource;
+//- (id)bodyDataForMessage:(id)arg1 fetchIfNotAvailable:(BOOL)arg2 allowPartial:(BOOL)arg3;
 
 @end

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2000-2012, GPGTools Project Team <gpgtools-devel@lists.gpgtools.org>
+ * Copyright (c) 2000-2012, GPGToolz Project Team <gpgtoolz-devel@lists.gpgtoolz.org>
  * All rights reserved.
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -9,14 +9,14 @@
  *     * Redistributions in binary form must reproduce the above copyright
  *       notice, this list of conditions and the following disclaimer in the
  *       documentation and/or other materials provided with the distribution.
- *     * Neither the name of GPGTools Project Team nor the names of GPGMail
+ *     * Neither the name of GPGToolz Project Team nor the names of GPGMail
  *       contributors may be used to endorse or promote products
  *       derived from this software without specific prior written permission.
  *
- * THIS SOFTWARE IS PROVIDED BY GPGTools Project Team AND CONTRIBUTORS ``AS IS'' AND ANY
+ * THIS SOFTWARE IS PROVIDED BY GPGToolz Project Team AND CONTRIBUTORS ``AS IS'' AND ANY
  * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL GPGTools Project Team AND CONTRIBUTORS BE LIABLE FOR ANY
+ * DISCLAIMED. IN NO EVENT SHALL GPGToolz Project Team AND CONTRIBUTORS BE LIABLE FOR ANY
  * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
  * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
  * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
@@ -27,10 +27,15 @@
 
 #import <Libmacgpg/Libmacgpg.h>
 #import "CCLog.h"
-#import "MutableMessageHeaders.h"
+#import "MCMutableMessageHeaders.h"
 #import "NSString+GPGMail.h"
 #import "Message+GPGMail.h"
 #import "GMSecurityHistory.h"
+
+#import "GMMessageSecurityFeatures.h"
+
+#import "MCMessage.h"
+#import "MCMessageHeaders.h"
 
 @implementation GMSecurityHistory
 
@@ -253,10 +258,14 @@
 
 - (GMSecurityOptions *)bestSecurityOptionsForReplyToMessage:(Message_GPGMail *)message signFlags:(GPGMAIL_SIGN_FLAG)signFlags
                                                encryptFlags:(GPGMAIL_ENCRYPT_FLAG)encryptFlags {
-	
-	GMSecurityOptions *defaultSecurityOptions = [self securityOptionsFromDefaults];
-	
-    GPGMAIL_SECURITY_METHOD securityMethod = 0;
+    
+    GMSecurityOptions *defaultSecurityOptions = [self securityOptionsFromDefaults];
+    // Bug #953: Wrong security method is selected for replies if keys for both methods are available.
+    //
+    // If a reply is composed and keys are available for either security methods, it's possible
+    // that the returned security method remains OPENPGP_SECURITY_METHOD_UNKNOWN.
+    // To fix that, securityMethod is initially set to the default.
+    GPGMAIL_SECURITY_METHOD securityMethod = defaultSecurityOptions.securityMethod;
     BOOL canPGPSign = (signFlags & GPGMAIL_SIGN_FLAG_OPENPGP);
     BOOL canPGPEncrypt = (encryptFlags & GPGMAIL_ENCRYPT_FLAG_OPENPGP);
     BOOL canSMIMESign = (signFlags & GPGMAIL_SIGN_FLAG_SMIME);
@@ -265,41 +274,47 @@
     BOOL canEncrypt = NO;
     BOOL SMIMEKeyAvailable = canSMIMESign || canSMIMEEncrypt;
     BOOL PGPKeyAvailable = canPGPSign || canPGPEncrypt;
-	BOOL messageIsSigned = message.isSMIMESigned || message.PGPSigned;
-	BOOL messageIsEncrypted = message.isSMIMEEncrypted || message.PGPEncrypted;
-	
-	// Message is not signed, check the defaults on what to do.
-	if(!messageIsSigned && (canPGPSign || canSMIMESign)) {
-		canSign = defaultSecurityOptions.shouldSign;
-		securityMethod = canPGPSign && canSMIMESign ? defaultSecurityOptions.securityMethod : (canPGPSign ? GPGMAIL_SECURITY_METHOD_OPENPGP : GPGMAIL_SECURITY_METHOD_SMIME);
-	}
-	if(!messageIsEncrypted && (canPGPEncrypt || canSMIMEEncrypt)) {
-		canEncrypt = defaultSecurityOptions.shouldEncrypt;
-		securityMethod = canPGPSign && canSMIMESign ? defaultSecurityOptions.securityMethod : (canPGPSign ? GPGMAIL_SECURITY_METHOD_OPENPGP : GPGMAIL_SECURITY_METHOD_SMIME);
-	}
-	
-	// If there's a signing key, and the message was signed, enable signing.
-	if(messageIsSigned && (canSMIMESign || canPGPSign))
-		canSign = YES;
-	
-	// If there's a encryption key and the message was encrypted, enable encrypting.
-	if(messageIsEncrypted && (canSMIMEEncrypt || canPGPEncrypt))
-		canEncrypt = YES;
-	
-	// Keys for both methods are available
-	if(SMIMEKeyAvailable && PGPKeyAvailable) {
-		if(message.isSMIMESigned || message.isSMIMEEncrypted)
-			securityMethod = GPGMAIL_SECURITY_METHOD_SMIME;
-		else if(message.PGPEncrypted || message.PGPSigned)
-			securityMethod = GPGMAIL_SECURITY_METHOD_OPENPGP;
-		// Not signed or not encrypted is already handled above.
-	}
-	else if(SMIMEKeyAvailable && !PGPKeyAvailable)
-		securityMethod = GPGMAIL_SECURITY_METHOD_SMIME;
-	else if(PGPKeyAvailable && !SMIMEKeyAvailable)
-		securityMethod = GPGMAIL_SECURITY_METHOD_OPENPGP;
-	
+    GMMessageSecurityFeatures *securityFeatures = [message securityFeatures];
+    BOOL messageIsSigned = securityFeatures.PGPSigned || message.isSMIMESigned;
+    BOOL messageIsEncrypted = securityFeatures.PGPEncrypted || message.isSMIMEEncrypted;
+
+    // Message is not signed, check the defaults on what to do.
+    if(!messageIsSigned && (canPGPSign || canSMIMESign)) {
+        canSign = defaultSecurityOptions.shouldSign;
+        securityMethod = canPGPSign && canSMIMESign ? defaultSecurityOptions.securityMethod : (canPGPSign ? GPGMAIL_SECURITY_METHOD_OPENPGP : GPGMAIL_SECURITY_METHOD_SMIME);
+    }
+    if(!messageIsEncrypted && (canPGPEncrypt || canSMIMEEncrypt)) {
+        canEncrypt = defaultSecurityOptions.shouldEncrypt;
+        securityMethod = canPGPSign && canSMIMESign ? defaultSecurityOptions.securityMethod : (canPGPSign ? GPGMAIL_SECURITY_METHOD_OPENPGP : GPGMAIL_SECURITY_METHOD_SMIME);
+    }
+
+    // If there's a signing key, and the message was signed, enable signing.
+    if(messageIsSigned && (canSMIMESign || canPGPSign))
+        canSign = YES;
+
+    // If there's a encryption key and the message was encrypted, enable encrypting.
+    if(messageIsEncrypted && (canSMIMEEncrypt || canPGPEncrypt))
+        canEncrypt = YES;
+
+    // Keys for both methods are available
+    if(SMIMEKeyAvailable && PGPKeyAvailable) {
+        if(message.isSMIMESigned || message.isSMIMEEncrypted)
+            securityMethod = GPGMAIL_SECURITY_METHOD_SMIME;
+        else if(securityFeatures.PGPSigned || securityFeatures.PGPEncrypted)
+            securityMethod = GPGMAIL_SECURITY_METHOD_OPENPGP;
+        // Not signed or not encrypted is already handled above.
+    }
+    else if(SMIMEKeyAvailable && !PGPKeyAvailable)
+        securityMethod = GPGMAIL_SECURITY_METHOD_SMIME;
+    else if(PGPKeyAvailable && !SMIMEKeyAvailable)
+        securityMethod = GPGMAIL_SECURITY_METHOD_OPENPGP;
+    
     return [GMSecurityOptions securityOptionsWithSecurityMethod:securityMethod shouldSign:canSign shouldEncrypt:canEncrypt];
+    
+/*	GMSecurityOptions *defaultSecurityOptions = [self securityOptionsFromDefaults];
+	
+    // TODO: Re-implement for security features.
+    return defaultSecurityOptions;*/
 }
 
 - (GMSecurityOptions *)bestSecurityOptionsForMessageDraft:(Message_GPGMail *)message signFlags:(GPGMAIL_SIGN_FLAG)signFlags
@@ -309,11 +324,13 @@
 	GPGMAIL_SECURITY_METHOD securityMethod = defaultSecurityOptions.securityMethod;
 	// If the message was signed or encrypted, we know what security method was used
 	// and will re-use that. Otherwise, use the default setting.
-	if([message isSigned] || [message isEncrypted])
+	if([message isSMIMESigned] || [message isSMIMEEncrypted] ||
+       [message securityFeatures].PGPSigned || [message securityFeatures].PGPEncrypted)
 		securityMethod = [message isSMIMEEncrypted] || [message isSMIMESigned] ? GPGMAIL_SECURITY_METHOD_SMIME : GPGMAIL_SECURITY_METHOD_OPENPGP;
 	
-	BOOL shouldSign = [[((GM_CAST_CLASS(MutableMessageHeaders *, id))[(GM_CAST_CLASS(Message *, id))message headers]) firstHeaderForKey:@"x-should-pgp-sign"] boolValue];
-	BOOL shouldEncrypt = [[((GM_CAST_CLASS(MutableMessageHeaders *, id))[(GM_CAST_CLASS(Message *, id))message headers]) firstHeaderForKey:@"x-should-pgp-encrypt"] boolValue];
+    MCMessageHeaders *headers = [(MCMessage *)message headersFetchIfNotAvailable:NO];
+    BOOL shouldSign = headers && [[headers firstHeaderForKey:@"x-should-pgp-sign"] isEqualToString:@"YES"];
+    BOOL shouldEncrypt = headers && [[headers firstHeaderForKey:@"x-should-pgp-encrypt"] isEqualToString:@"YES"];
 	
 	return [GMSecurityOptions securityOptionsWithSecurityMethod:securityMethod shouldSign:shouldSign shouldEncrypt:shouldEncrypt];
 }
