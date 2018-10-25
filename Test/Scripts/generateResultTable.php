@@ -131,13 +131,13 @@ function printRow($a, $b, $c, $d, $e, $i, $stats, $result) {
     if (STATUS_NYI == $recv_status) {$recv_color=COLOR_NYI; ++$stats[STATUS_NYI];}
     if ("#" == substr($send_status, 0, 1)) {
         $nr = substr($send_status, 1);
-        $send_status = "<a href='http://gpgtools.lighthouseapp.com/projects/65764/tickets/$nr'>#$nr</a>";
+        $send_status = "<a href='http://gpgtoolz.lighthouseapp.com/projects/65764/tickets/$nr'>#$nr</a>";
         $send_color=COLOR_ISSUE;
         ++$stats[STATUS_ISSUE];
     }
     if ("#" == substr($recv_status, 0, 1)) {
         $nr = substr($recv_status, 1);
-        $recv_status = "<a href='http://gpgtools.lighthouseapp.com/projects/65764/tickets/$nr'>#$nr</a>";
+        $recv_status = "<a href='http://gpgtoolz.lighthouseapp.com/projects/65764/tickets/$nr'>#$nr</a>";
         $recv_color=COLOR_ISSUE;
         ++$stats[STATUS_ISSUE];
     }

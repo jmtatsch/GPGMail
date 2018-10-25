@@ -18,13 +18,13 @@
 "MESSAGE_BANNER_PGP_DECRYPT_SECKEY_ERROR_MESSAGE" = "None of the following secret keys could be found in your keychain (%@). The secret key is needed to decrypt this message. \n\nPlease check with the sender that they used your correct public key.\nCheck any backup of your keychain, and try to import the secret key from there.";
 
 "MESSAGE_BANNER_PGP_DECRYPT_SYSTEM_ERROR_TITLE" = "Lo deschiframent a fracassat sus una error desconeguda !";
-"MESSAGE_BANNER_PGP_DECRYPT_SYSTEM_ERROR_MESSAGE" = "Una error s'es producha al moment del deschiframent del messatge.\n\nContactatz-nos a l'adreça seguenta https://gpgtools.tenderapp.com/";
+"MESSAGE_BANNER_PGP_DECRYPT_SYSTEM_ERROR_MESSAGE" = "Una error s'es producha al moment del deschiframent del messatge.\n\nContactatz-nos a l'adreça seguenta https://gpgtoolz.tenderapp.com/";
 
 "MESSAGE_BANNER_PGP_DECRYPT_GENERAL_ERROR_TITLE" = "Fracàs del deschiframent per una rason desconeguda !";
-"MESSAGE_BANNER_PGP_DECRYPT_GENERAL_ERROR_MESSAGE" = "Una error desconeguda s'es producha al moment del deschiframent del messatge.\n\nMessatge de l'error GPG :\n%@\nContactatz-nos, en renseignant lo messatge d'error GPG sus https://gpgtools.tenderapp.com/";
+"MESSAGE_BANNER_PGP_DECRYPT_GENERAL_ERROR_MESSAGE" = "Una error desconeguda s'es producha al moment del deschiframent del messatge.\n\nMessatge de l'error GPG :\n%@\nContactatz-nos, en renseignant lo messatge d'error GPG sus https://gpgtoolz.tenderapp.com/";
 
 "MESSAGE_BANNER_PGP_DECRYPT_WRONG_SECKEY_ERROR_TITLE" = "Clau erronèa utilizada per chifrar aqueste messatge.";
-"MESSAGE_BANNER_PGP_DECRYPT_WRONG_SECKEY_ERROR_MESSAGE" = "Aqueste messatge a pas pogut èsser deschifrat perque una clau publica erronèa es estada utilizada per lo chifrar.\n\nMercé de nos contactar sus https://gpgtools.tenderapp.com/";
+"MESSAGE_BANNER_PGP_DECRYPT_WRONG_SECKEY_ERROR_MESSAGE" = "Aqueste messatge a pas pogut èsser deschifrat perque una clau publica erronèa es estada utilizada per lo chifrar.\n\nMercé de nos contactar sus https://gpgtoolz.tenderapp.com/";
 
 "MESSAGE_BANNER_PGP_DECRYPT_CORRUPTED_DATA_ERROR_TITLE" = "Lo messatge chifrat es damatjat.";
 "MESSAGE_BANNER_PGP_DECRYPT_CORRUPTED_DATA_ERROR_MESSAGE" = "Lo messatge chifrat es damatjat e pòt pas èsser deschifrat.\n\nVeuillez demander a l'expeditor de l'mandar a novèl.";
@@ -35,16 +35,16 @@
 "MESSAGE_BANNER_PGP_VERIFY_NO_PUBKEY_ERROR_MESSAGE" = "Lo messatge a pas pogut èsser verificat perque la clau utilizada per lo signar es pas dins vòstre trossèl GPG.\n\nRecercatz la clau amb l'identificant %@ dins GPG Keychain Acces e importez-la per verificar aqueste messatge.";
 
 "MESSAGE_BANNER_PGP_VERIFY_ALGORITHM_ERROR_TITLE" = "La signatura d'aqueste messatge es estada creada amb un algoritme pas suportat.";
-"MESSAGE_BANNER_PGP_VERIFY_ALGORITHM_ERROR_MESSAGE" = "Aqueste messatge a pas pogut èsser verificat perque sa signatura es estada creada amb un algoritme pas suportat.\n\nMercé de nos contactar sus https://gpgtools.tenderapp.com/";
+"MESSAGE_BANNER_PGP_VERIFY_ALGORITHM_ERROR_MESSAGE" = "Aqueste messatge a pas pogut èsser verificat perque sa signatura es estada creada amb un algoritme pas suportat.\n\nMercé de nos contactar sus https://gpgtoolz.tenderapp.com/";
 
 "MESSAGE_BANNER_PGP_VERIFY_BAD_SIGNATURE_ERROR_TITLE" = "ATTENTION : La signatura d'aqueste messatge es pas valide !";
-"MESSAGE_BANNER_PGP_VERIFY_BAD_SIGNATURE_ERROR_MESSAGE" = "Aqueste messatge pourrait aver été modificat aprèp la creacion de sa signatura.\n\nMercé de contactar l'expeditor per s'assegurar que lo contenu d'aqueste messatge es identique a l'original.\n\nMercé de nos contactar sur\nhttps://gpgtools.tenderapp.com/\nsi vous êtes segur que lo messatge n'a pas été modificat.";
+"MESSAGE_BANNER_PGP_VERIFY_BAD_SIGNATURE_ERROR_MESSAGE" = "Aqueste messatge pourrait aver été modificat aprèp la creacion de sa signatura.\n\nMercé de contactar l'expeditor per s'assegurar que lo contenu d'aqueste messatge es identique a l'original.\n\nMercé de nos contactar sur\nhttps://gpgtoolz.tenderapp.com/\nsi vous êtes segur que lo messatge n'a pas été modificat.";
 
 "MESSAGE_BANNER_PGP_VERIFY_SYSTEM_ERROR_TITLE" = "La verificacion de la signatura del messatge a fracassat a causa d'una error desconeguda !";
-"MESSAGE_BANNER_PGP_VERIFY_SYSTEM_ERROR_MESSAGE" = "Una error desconeguda es arribada al moment de la verificacion de la signatura d'aqueste messatge.\n\nMercé de nos contactar sus https://gpgtools.tenderapp.com/";
+"MESSAGE_BANNER_PGP_VERIFY_SYSTEM_ERROR_MESSAGE" = "Una error desconeguda es arribada al moment de la verificacion de la signatura d'aqueste messatge.\n\nMercé de nos contactar sus https://gpgtoolz.tenderapp.com/";
 
 "MESSAGE_BANNER_PGP_VERIFY_CORRUPTED_DATA_ERROR_TITLE" = "Error de la signatura del messatge !";
-"MESSAGE_BANNER_PGP_VERIFY_CORRUPTED_DATA_ERROR_MESSAGE" = "La signatura del messatge es invalida e pòt pas èsser verificada.\n\nMercé de nos contactar sus https://gpgtools.tenderapp.com/";
+"MESSAGE_BANNER_PGP_VERIFY_CORRUPTED_DATA_ERROR_MESSAGE" = "La signatura del messatge es invalida e pòt pas èsser verificada.\n\nMercé de nos contactar sus https://gpgtoolz.tenderapp.com/";
 
 "MESSAGE_BANNER_PGP_VERIFY_KEY_EXPIRED_ERROR_TITLE" = "La clau de la signatura del messatge es localizada.";
 "MESSAGE_BANNER_PGP_VERIFY_KEY_EXPIRED_ERROR_MESSAGE" = "La clau utilizada per signar aqueste messatge es localizada.\n\nPodètz ensajar de refrescar la clau amb l'identificant %@ dins GPG Keychain e demander a l'expeditor la rason de son expedicion.";
@@ -53,10 +53,10 @@
 "MESSAGE_BANNER_PGP_VERIFY_SIGNATURE_EXPIRED_ERROR_MESSAGE" = "La signatura es localizada e a pas pogut èsser verificada.\n\nDemandatz a l'expeditor la rason de son expedicion.";
 
 "MESSAGE_BANNER_PGP_DECRYPT_ERROR_NO_GPG_TITLE" = "MacGPG is not installed";
-"MESSAGE_BANNER_PGP_DECRYPT_ERROR_NO_GPG_MESSAGE" = "Decrypting failed because MacGPG is not installed.\n\nPlease download and re-install GPG Suite from https://gpgtools.org";
+"MESSAGE_BANNER_PGP_DECRYPT_ERROR_NO_GPG_MESSAGE" = "Decrypting failed because MacGPG is not installed.\n\nPlease download and re-install GPG Suite from https://gpgtoolz.org";
 
 "MESSAGE_BANNER_PGP_VERIFY_ERROR_NO_GPG_TITLE" = "MacGPG is not installed";
-"MESSAGE_BANNER_PGP_VERIFY_ERROR_NO_GPG_MESSAGE" = "Verifying failed because MacGPG is not installed.\n\nPlease download and re-install GPG Suite from https://gpgtools.org";
+"MESSAGE_BANNER_PGP_VERIFY_ERROR_NO_GPG_MESSAGE" = "Verifying failed because MacGPG is not installed.\n\nPlease download and re-install GPG Suite from https://gpgtoolz.org";
 
 "MESSAGE_BANNER_PGP_ATTACHMENTS_DECRYPT_VERIFY_ERROR_TITLE" = "%d fichièrs junts n'ont pas pu èsser deschifrats o verificats.";
 "MESSAGE_BANNER_PGP_ATTACHMENTS_DECRYPT_VERIFY_ERROR_MESSAGE" = "Mercé de clicar sus l'icòna de la pèça junta dins l'entèsta seguretat del messatge per mai de detalhs.";
@@ -78,13 +78,13 @@
 "MESSAGE_BANNER_PGP_ATTACHMENT_DECRYPT_SECKEY_ERROR_MESSAGE" = "None of the following secret keys could be found in your keychain (%@). The secret key is needed to decrypt this attachment. \n\nPlease check with the sender that they used your correct public key.\nCheck any backup of your keychain, and try to import the secret key from there.";
 
 "MESSAGE_BANNER_PGP_ATTACHMENT_DECRYPT_SYSTEM_ERROR_TITLE" = "Lo deschiframent a fracassat per una rason desconeguda !";
-"MESSAGE_BANNER_PGP_ATTACHMENT_DECRYPT_SYSTEM_ERROR_MESSAGE" = "Una error desconeguda es arribada pendent lo deschiframent d'aqueste fichièr junt.\n\nMercé de nos contactar sus https://gpgtools.tenderapp.com/";
+"MESSAGE_BANNER_PGP_ATTACHMENT_DECRYPT_SYSTEM_ERROR_MESSAGE" = "Una error desconeguda es arribada pendent lo deschiframent d'aqueste fichièr junt.\n\nMercé de nos contactar sus https://gpgtoolz.tenderapp.com/";
 
 "MESSAGE_BANNER_PGP_ATTACHMENT_DECRYPT_GENERAL_ERROR_TITLE" = "Lo deschiframent a fracassat per una rason desconeguda !";
-"MESSAGE_BANNER_PGP_ATTACHMENT_DECRYPT_GENERAL_ERROR_MESSAGE" = "Una error desconeguda es arribada pendent lo deschiframent d'aqueste fichièr junt.\n\nMessatge d'error GPG :\n%@\nMercé de nos contactar en incluant aqueste messatge d'error sus https://gpgtools.tenderapp.com/";
+"MESSAGE_BANNER_PGP_ATTACHMENT_DECRYPT_GENERAL_ERROR_MESSAGE" = "Una error desconeguda es arribada pendent lo deschiframent d'aqueste fichièr junt.\n\nMessatge d'error GPG :\n%@\nMercé de nos contactar en incluant aqueste messatge d'error sus https://gpgtoolz.tenderapp.com/";
 
 "MESSAGE_BANNER_PGP_ATTACHMENT_DECRYPT_WRONG_SECKEY_ERROR_TITLE" = "Una clau invalida es estada utilizada per chifrar aqueste fichièr junt.";
-"MESSAGE_BANNER_PGP_ATTACHMENT_DECRYPT_WRONG_SECKEY_ERROR_MESSAGE" = "Aqueste fichièr junt a pas pogut èsser deschifrat perque una clau publica invalide es estada utilizada per lo chifrar.\n\nMercé de nos contactar sus https://gpgtools.tenderapp.com/";
+"MESSAGE_BANNER_PGP_ATTACHMENT_DECRYPT_WRONG_SECKEY_ERROR_MESSAGE" = "Aqueste fichièr junt a pas pogut èsser deschifrat perque una clau publica invalide es estada utilizada per lo chifrar.\n\nMercé de nos contactar sus https://gpgtoolz.tenderapp.com/";
 
 "MESSAGE_BANNER_PGP_ATTACHMENT_DECRYPT_CORRUPTED_DATA_ERROR_TITLE" = "Lo fichièr junt chifrat es damatjat.";
 "MESSAGE_BANNER_PGP_ATTACHMENT_DECRYPT_CORRUPTED_DATA_ERROR_MESSAGE" = "Lo fichièr junt chifrat es damatjat e a pas pogut èsser deschifrat.\n\nMercé de demander a l'expeditor de renovelar son mandadís.";
@@ -96,16 +96,16 @@
 "MESSAGE_BANNER_PGP_ATTACHMENT_VERIFY_NO_PUBKEY_ERROR_MESSAGE" = "La signatura del fichièr junt a pas pogut èsser verificada perque la clau utilizada es pas dins vòstre trossèl GPG.\n\nRecercatz la clau amb l'identificant %@ dins GPG Keychain e importatz-la per verificar lo fichièr junt.";
 
 "MESSAGE_BANNER_PGP_ATTACHMENT_VERIFY_ALGORITHM_ERROR_TITLE" = "La signatura del fichièr junt es estada creada amb un algoritme qu'es pas suportat.";
-"MESSAGE_BANNER_PGP_ATTACHMENT_VERIFY_ALGORITHM_ERROR_MESSAGE" = "Lo fichièr junt a pas pogut èsser verificat perque la clau utilizada per la signatura es estada creada amb un algoritme pas suportat.\n\nMercé de nos contactar sus https://gpgtools.tenderapp.com/";
+"MESSAGE_BANNER_PGP_ATTACHMENT_VERIFY_ALGORITHM_ERROR_MESSAGE" = "Lo fichièr junt a pas pogut èsser verificat perque la clau utilizada per la signatura es estada creada amb un algoritme pas suportat.\n\nMercé de nos contactar sus https://gpgtoolz.tenderapp.com/";
 
 "MESSAGE_BANNER_PGP_ATTACHMENT_VERIFY_BAD_SIGNATURE_ERROR_TITLE" = "ATENCION: la signatura del fichièr junt es invalida !";
-"MESSAGE_BANNER_PGP_ATTACHMENT_VERIFY_BAD_SIGNATURE_ERROR_MESSAGE" = "Benlèu qu'aqueste fichièr junt es estat modificat aprèp aposicion de la signatura.\n\nMercé de contactar l'expeditor per s'assegurar que lo fichièr junt recebut es identic a l'original.\n\nMercé de nos contactar sus\nhttps://gpgtools.tenderapp.com/\nse sètz segur que lo fichièr es pas estat modificat.";
+"MESSAGE_BANNER_PGP_ATTACHMENT_VERIFY_BAD_SIGNATURE_ERROR_MESSAGE" = "Benlèu qu'aqueste fichièr junt es estat modificat aprèp aposicion de la signatura.\n\nMercé de contactar l'expeditor per s'assegurar que lo fichièr junt recebut es identic a l'original.\n\nMercé de nos contactar sus\nhttps://gpgtoolz.tenderapp.com/\nse sètz segur que lo fichièr es pas estat modificat.";
 
 "MESSAGE_BANNER_PGP_ATTACHMENT_VERIFY_SYSTEM_ERROR_TITLE" = "La verificacion de la signatura a fracassat amb una error desconeguda !";
-"MESSAGE_BANNER_PGP_ATTACHMENT_VERIFY_SYSTEM_ERROR_MESSAGE" = "Una error desconeguda s'es producha al moment de la verificacion de la signatura d'aqueste fichièr junt.\n\nMercé de nos contactar sus https://gpgtools.tenderapp.com/";
+"MESSAGE_BANNER_PGP_ATTACHMENT_VERIFY_SYSTEM_ERROR_MESSAGE" = "Una error desconeguda s'es producha al moment de la verificacion de la signatura d'aqueste fichièr junt.\n\nMercé de nos contactar sus https://gpgtoolz.tenderapp.com/";
 
 "MESSAGE_BANNER_PGP_ATTACHMENT_VERIFY_CORRUPTED_DATA_ERROR_TITLE" = "Error dins las donadas de la signatura !";
-"MESSAGE_BANNER_PGP_ATTACHMENT_VERIFY_CORRUPTED_DATA_ERROR_MESSAGE" = "La signatura del fichièr junt es invalida e pòt pas èsser verificada.\n\nContactatz-nos a l'adreça : https://gpgtools.tenderapp.com/";
+"MESSAGE_BANNER_PGP_ATTACHMENT_VERIFY_CORRUPTED_DATA_ERROR_MESSAGE" = "La signatura del fichièr junt es invalida e pòt pas èsser verificada.\n\nContactatz-nos a l'adreça : https://gpgtoolz.tenderapp.com/";
 
 "MESSAGE_BANNER_PGP_ATTACHMENT_VERIFY_KEY_EXPIRED_ERROR_TITLE" = "La clau de la signatura es localizada.";
 "MESSAGE_BANNER_PGP_ATTACHMENT_VERIFY_KEY_EXPIRED_ERROR_MESSAGE" = "La clau utilizada per signar aqueste fichièr junt es localizada.\n\nPodètz ensajar de refrescar la clau amb l'identificant %@ dins GPG Keychain e demander a l'expeditor la rason d'aquesta locala.";
@@ -164,25 +164,25 @@
 
 /* No Libmacgpg. */
 "LIBMACGPG_NOT_FOUND_TITLE" = "Libmacgpg es pas estada trobada";
-"LIBMACGPG_NOT_FOUND_MESSAGE" = "Libmacgpg was not found on your system. Please download and install GPG Suite from https://www.gpgtools.org.";
+"LIBMACGPG_NOT_FOUND_MESSAGE" = "Libmacgpg was not found on your system. Please download and install GPG Suite from https://www.gpgtoolz.org.";
 
 /* Code signature invalid */
 CODE_SIGN_ERROR_TITLE = "Quelqu'un a trafiqué vòstra installacion GPGMail !";
-CODE_SIGN_ERROR_MESSAGE = "To keep you safe, GPGMail will not be loaded!\n\nPlease re-install GPG Suite from https://gpgtools.org to be sure you have an original version from us!";
+CODE_SIGN_ERROR_MESSAGE = "To keep you safe, GPGMail will not be loaded!\n\nPlease re-install GPG Suite from https://gpgtoolz.org to be sure you have an original version from us!";
 
 /* GPGMailGPGMailBundle.defaults can't be loaded */
 NO_DEFAULTS_TITLE = "Impossible de charger les paramètres per defaut de GPGMail !";
-NO_DEFAULTS_MESSAGE = "GPGMail fonciona pas coma esperat.\n\nMercé de telecargar e de reïnstallar GPG Suite dempuèi https://gpgtools.org\n\nSe lo problèma contunha, mercé de nos contactar sus https://gpgtools.tenderapp.com/.";
+NO_DEFAULTS_MESSAGE = "GPGMail fonciona pas coma esperat.\n\nMercé de telecargar e de reïnstallar GPG Suite dempuèi https://gpgtoolz.org\n\nSe lo problèma contunha, mercé de nos contactar sus https://gpgtoolz.tenderapp.com/.";
 
 /* Errors while trying to sign a message. */
 "MESSAGE_SIGNING_ERROR_NO_PINENTRY_TITLE" = "Signing your message failed due to a broken pinentry!";
-"MESSAGE_SIGNING_ERROR_NO_PINENTRY_DESCRIPTION" = "pinentry, the tool responsible for asking for your password, seems to be broken.\n\nTo fix this problem, re-install GPG Suite from https://gpgtools.org.";
+"MESSAGE_SIGNING_ERROR_NO_PINENTRY_DESCRIPTION" = "pinentry, the tool responsible for asking for your password, seems to be broken.\n\nTo fix this problem, re-install GPG Suite from https://gpgtoolz.org.";
 
 "MESSAGE_SIGNING_ERROR_NO_AGENT_TITLE" = "La signatura de vòstre messatge a fracassat a causa de l'agent GPG defectuós !";
-"MESSAGE_SIGNING_ERROR_NO_AGENT_DESCRIPTION" = "The GPG agent which is a crucial part of GPG seems to be broken.\n\nTo fix this problem, re-install GPG Suite from https://gpgtools.org.";
+"MESSAGE_SIGNING_ERROR_NO_AGENT_DESCRIPTION" = "The GPG agent which is a crucial part of GPG seems to be broken.\n\nTo fix this problem, re-install GPG Suite from https://gpgtoolz.org.";
 
 "MESSAGE_SIGNING_ERROR_AGENT_ERROR_TITLE" = "La signatura de vòstre messatge a pas pogut se debanar a causa d'un problèma de communication de l'agent GPG.";
-"MESSAGE_SIGNING_ERROR_AGENT_ERROR_DESCRIPTION" = "It was not possible to talk to the GPG agent in order to request your password.\n\nTo fix this problem, re-install GPG Suite from https://gpgtools.org.";
+"MESSAGE_SIGNING_ERROR_AGENT_ERROR_DESCRIPTION" = "It was not possible to talk to the GPG agent in order to request your password.\n\nTo fix this problem, re-install GPG Suite from https://gpgtoolz.org.";
 
 "MESSAGE_SIGNING_ERROR_UNKNOWN_ERROR_TITLE" = "La signatura de vòstre messatge a fracassat a causa d'una error desconeguda.";
 "MESSAGE_SIGNING_ERROR_UNKNOWN_ERROR_DESCRIPTION" = "Podèm malurosament pas tractar l'error dins aqueste contèxte.";
@@ -193,7 +193,7 @@ NO_DEFAULTS_MESSAGE = "GPGMail fonciona pas coma esperat.\n\nMercé de telecarga
 "MESSAGE_SIGNING_ERROR_WRONG_PASSPHRASE_TITLE" = "You entered the wrong password too many times.";
 "MESSAGE_SIGNING_ERROR_WRONG_PASSPHRASE_DESCRIPTION" = "Signing your message was aborted because you entered the wrong password 3 times.";
 
-"CONTACT_GPGTOOLS_WITH_INFO_MESSAGE" = "\n\nSe vòstre problèma contunha, mercé de nos contactar sus https://gpgtools.tenderapp.com/ amb la descripcion d'error seguenta :\n\n%@";
+"CONTACT_GPGTOOLS_WITH_INFO_MESSAGE" = "\n\nSe vòstre problèma contunha, mercé de nos contactar sus https://gpgtoolz.tenderapp.com/ amb la descripcion d'error seguenta :\n\n%@";
 
 "MESSAGE_BANNER_PGP_DECRYPT_ERROR_PASSPHRASE_REQUEST_CANCELLED_TITLE" = "Avètz anullat lo deschiframent del messatge";
 "MESSAGE_BANNER_PGP_DECRYPT_ERROR_PASSPHRASE_REQUEST_CANCELLED_MESSAGE" = "The message couldn't be decrypted because you cancelled the password request.";
@@ -202,28 +202,28 @@ NO_DEFAULTS_MESSAGE = "GPGMail fonciona pas coma esperat.\n\nMercé de telecarga
 "MESSAGE_BANNER_PGP_ATTACHMENT_DECRYPT_ERROR_PASSPHRASE_REQUEST_CANCELLED_MESSAGE" = "The attachment couldn't be decrypted because you cancelled the password request.";
 
 "MESSAGE_BANNER_PGP_DECRYPT_ERROR_XPC_DAMAGED_TITLE" = "GPG Suite fonciona pas coma previst";
-"MESSAGE_BANNER_PGP_DECRYPT_ERROR_XPC_DAMAGED_MESSAGE" = "Decrypting the message failed.\n\nPlease re-install GPG Suite from https://gpgtools.org.\n\nShould this problem persist, contact us at https://gpgtools.tenderapp.com/ and include the information that the xpc service is not working properly.";
+"MESSAGE_BANNER_PGP_DECRYPT_ERROR_XPC_DAMAGED_MESSAGE" = "Decrypting the message failed.\n\nPlease re-install GPG Suite from https://gpgtoolz.org.\n\nShould this problem persist, contact us at https://gpgtoolz.tenderapp.com/ and include the information that the xpc service is not working properly.";
 
 "MESSAGE_BANNER_PGP_ATTACHMENT_DECRYPT_ERROR_XPC_DAMAGED_TITLE" = "GPG Suite fonciona pas coma previst";
-"MESSAGE_BANNER_PGP_ATTACHMENT_DECRYPT_ERROR_XPC_DAMAGED_MESSAGE" = "Decrypting the attachment failed.\n\nPlease re-install GPG Suite from https://gpgtools.org.\n\nShould this problem persist, contact us at https://gpgtools.tenderapp.com/ and include the information that the xpc service is not working properly.";
+"MESSAGE_BANNER_PGP_ATTACHMENT_DECRYPT_ERROR_XPC_DAMAGED_MESSAGE" = "Decrypting the attachment failed.\n\nPlease re-install GPG Suite from https://gpgtoolz.org.\n\nShould this problem persist, contact us at https://gpgtoolz.tenderapp.com/ and include the information that the xpc service is not working properly.";
 
 "MESSAGE_BANNER_PGP_VERIFY_ERROR_XPC_DAMAGED_TITLE" = "La seguida GPG fonciona pas coma previst";
-"MESSAGE_BANNER_PGP_VERIFY_ERROR_XPC_DAMAGED_MESSAGE" = "Verifying the message failed.\n\nPlease re-install GPG Suite from https://gpgtools.org.\n\nShould this problem persist, contact us at https://gpgtools.tenderapp.com/ and include the information that the xpc service is not working properly.";
+"MESSAGE_BANNER_PGP_VERIFY_ERROR_XPC_DAMAGED_MESSAGE" = "Verifying the message failed.\n\nPlease re-install GPG Suite from https://gpgtoolz.org.\n\nShould this problem persist, contact us at https://gpgtoolz.tenderapp.com/ and include the information that the xpc service is not working properly.";
 
 "MESSAGE_BANNER_PGP_ATTACHMENT_VERIFY_ERROR_XPC_DAMAGED_TITLE" = "GPG Suite fonciona pas coma previst";
-"MESSAGE_BANNER_PGP_ATTACHMENT_VERIFY_ERROR_XPC_DAMAGED_MESSAGE" = "Verifying the attachment failed.\n\nPlease re-install GPG Suite from https://gpgtools.org.\n\nShould this problem persist, contact us at https://gpgtools.tenderapp.com/ and include the information that the xpc service is not working properly.";
+"MESSAGE_BANNER_PGP_ATTACHMENT_VERIFY_ERROR_XPC_DAMAGED_MESSAGE" = "Verifying the attachment failed.\n\nPlease re-install GPG Suite from https://gpgtoolz.org.\n\nShould this problem persist, contact us at https://gpgtoolz.tenderapp.com/ and include the information that the xpc service is not working properly.";
 
 "MESSAGE_SIGNING_ERROR_PINENTRY_CRASH_TITLE" = "Signing your message failed due to a problem during the password request";
-"MESSAGE_SIGNING_ERROR_PINENTRY_CRASH_DESCRIPTION" = "pinentry, the tool responsible for asking for your password, is not working properly.\n\nTo fix this problem, please re-install GPG Suite from https://gpgtools.org.";
+"MESSAGE_SIGNING_ERROR_PINENTRY_CRASH_DESCRIPTION" = "pinentry, the tool responsible for asking for your password, is not working properly.\n\nTo fix this problem, please re-install GPG Suite from https://gpgtoolz.org.";
 
 "MESSAGE_SIGNING_ERROR_XPC_DAMAGED_TITLE" = "La signatura de vòstre messatge a fracassat a causa d'un problèma dins vòstra installacion de GPGMail.";
-"MESSAGE_SIGNING_ERROR_XPC_DAMAGED_DESCRIPTION" = "To fix this problem, please re-install GPG Suite from https://gpgtools.org.\n\nShould this problem persist, contact us at https://gpgtools.tenderapp.com/ and include the information that the xpc service is not working properly.";
+"MESSAGE_SIGNING_ERROR_XPC_DAMAGED_DESCRIPTION" = "To fix this problem, please re-install GPG Suite from https://gpgtoolz.org.\n\nShould this problem persist, contact us at https://gpgtoolz.tenderapp.com/ and include the information that the xpc service is not working properly.";
 
 "MESSAGE_BANNER_PGP_DECRYPT_ERROR_PINENTRY_CRASHED_TITLE" = "Decrypting the message failed due to a broken pinentry";
-"MESSAGE_BANNER_PGP_DECRYPT_ERROR_PINENTRY_CRASHED_MESSAGE" = "pinentry, the tool responsible for asking for your password, seems to be broken.\n\nTo fix this problem, re-install GPG Suite from https://gpgtools.org.";
+"MESSAGE_BANNER_PGP_DECRYPT_ERROR_PINENTRY_CRASHED_MESSAGE" = "pinentry, the tool responsible for asking for your password, seems to be broken.\n\nTo fix this problem, re-install GPG Suite from https://gpgtoolz.org.";
 
 "MESSAGE_BANNER_PGP_ATTACHMENT_DECRYPT_ERROR_PINENTRY_CRASHED_TITLE" = "Decrypting the attachment failed due to a defect pinentry";
-"MESSAGE_BANNER_PGP_ATTACHMENT_DECRYPT_ERROR_PINENTRY_CRASHED_MESSAGE" = "pinentry, the tool responsible for asking for your password, seems to be broken.\n\nTo fix this problem, re-install GPG Suite from https://gpgtools.org.";
+"MESSAGE_BANNER_PGP_ATTACHMENT_DECRYPT_ERROR_PINENTRY_CRASHED_MESSAGE" = "pinentry, the tool responsible for asking for your password, seems to be broken.\n\nTo fix this problem, re-install GPG Suite from https://gpgtoolz.org.";
 
 "UNENCRYPTED_REPLY_TO_ENCRYPTED_MESSAGE_TITLE" = "Atencion : Sètz a mand d'mandar una responsa non chifrada a un messatge chifrat\n";
 "UNENCRYPTED_REPLY_TO_ENCRYPTED_MESSAGE_MISSING_KEYS_SINGULAR" = "Es pas possible de chifrar vòstra responsa perque la clau publica del destinatari suivant es manquante :\n\n%@";

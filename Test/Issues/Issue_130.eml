@@ -1,9 +1,9 @@
-Message-ID: <4E44BF19.1040502@gpgtools.org>
+Message-ID: <4E44BF19.1040502@gpgtoolz.org>
 Date: Fri, 12 Aug 2011 07:50:17 +0200
-From: GPGTools Test Key <test@gpgtools.org>
+From: GPGToolz Test Key <test@gpgtoolz.org>
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.7; rv:5.0) Gecko/20110624 Thunderbird/5.0
 MIME-Version: 1.0
-To: test@gpgtools.org
+To: test@gpgtoolz.org
 Subject: Issue/130
 X-Enigmail-Version: 1.2
 Content-Type: multipart/mixed;
@@ -14,7 +14,7 @@ This is a multi-part message in MIME format.
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
 
-http://gpgtools.lighthouseapp.com/projects/65764/tickets/130
+http://gpgtoolz.lighthouseapp.com/projects/65764/tickets/130
 
 --------------010500080106060703050804
 Content-Type: application/octet-stream; x-mac-type="0"; x-mac-creator="0";

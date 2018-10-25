@@ -109,13 +109,13 @@ typedef enum {
     NSAlert *alert = [NSAlert new];
     
     if(error.code == GMSupportPlanPaddleErrorCodeNetworkError) {
-        alert.informativeText = @"We were unable to connect to the paddle.com API to verify your activation code.\nIf you are using any macOS firewall product (buil-in firewall, Little Snitch, etc.), please allow connections to paddle.com for the activation to complete. You can block any connections again once the activation is completed.\n\nPlease contact us at business@gpgtools.org if the problem persists.";
+        alert.informativeText = @"We were unable to connect to the paddle.com API to verify your activation code.\nIf you are using any macOS firewall product (buil-in firewall, Little Snitch, etc.), please allow connections to paddle.com for the activation to complete. You can block any connections again once the activation is completed.\n\nPlease contact us at business@gpgtoolz.org if the problem persists.";
     }
     else if(error.code == GMSupportPlanPaddleErrorCodeActivationCodeNotFound) {
-        alert.informativeText = @"The entered activation code is invalid.\nPlease contact us at business@gpgtools.org if you are sure that you have entered your code correctly.";
+        alert.informativeText = @"The entered activation code is invalid.\nPlease contact us at business@gpgtoolz.org if you are sure that you have entered your code correctly.";
     }
     else if(error.code == GMSupportPlanPaddleErrorCodeActivationCodeAlreadyUsed) {
-        alert.informativeText = @"We are very sorry to inform you that you have exceeded the allowed number of activations.\nPlease contact us at business@gpgtools.org, if you believe that you should still have activations left.";
+        alert.informativeText = @"We are very sorry to inform you that you have exceeded the allowed number of activations.\nPlease contact us at business@gpgtoolz.org, if you believe that you should still have activations left.";
     }
     else {
         alert.informativeText = @"Unfortunately an unknown error has occured. Please retry later or use 'System Preferences › GPG Suite › Report Problem' to contact us";
@@ -157,7 +157,7 @@ typedef enum {
     NSDictionary *supportPlanInformation = [[self delegate] contractInformation];
     NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:
                                 [NSColor linkColor], NSForegroundColorAttributeName,
-                                [NSURL URLWithString:@"https://gpgtools.org/buy-support-plan"], NSLinkAttributeName,
+                                [NSURL URLWithString:@"https://gpgtoolz.org/buy-support-plan"], NSLinkAttributeName,
                                 nil];
     
     NSNumber *remainingTrialDays = [supportPlanInformation valueForKey:@"ActivationRemainingTrialDays"];
@@ -247,7 +247,7 @@ typedef enum {
 
 - (IBAction)activate:(id)sender {
     if([(NSButton *)sender tag] == GMSupportPlanAssistantBuyActivateButtonStateBuy) {
-        [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"https://gpgtools.org/buy-support-plan"]];
+        [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"https://gpgtoolz.org/buy-support-plan"]];
     }
     else {
         if(self.email && self.emailTextField.stringValue != self.email) {

@@ -555,7 +555,7 @@ NSString * const kLibraryMimeBodyReturnCompleteBodyDataForComposeBackendKey = @"
 	if([contents ivarExists:@"IsDraft"] && isDraft) {
 		// Prevent hang on 10.10 when restoring drafts.
 		// Mail on 10.10 needs the "x-apple-mail-remote-attachments" header in every draft mail.
-		// See: https://gpgtools.lighthouseapp.com/projects/65764-gpgmail/tickets/871
+		// See: https://gpgtoolz.lighthouseapp.com/projects/65764-gpgmail/tickets/871
 		[headers setHeader:self.GMShouldDownloadRemoteAttachments ? @"YES" : @"NO" forKey:@"x-apple-mail-remote-attachments"];
 
 

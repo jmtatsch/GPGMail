@@ -115,7 +115,6 @@
 		301380D517567D26005948EE /* CertLargeStd@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 301380D317567D26005948EE /* CertLargeStd@2x.png */; };
 		301380DC17569815005948EE /* CertLargeNotTrusted@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 301380DB17569814005948EE /* CertLargeNotTrusted@2x.png */; };
 		301380DE17569819005948EE /* CertLargeNotTrusted.png in Resources */ = {isa = PBXBuildFile; fileRef = 301380DD17569819005948EE /* CertLargeNotTrusted.png */; };
-		301380E217578133005948EE /* GPGMail.iconset in Resources */ = {isa = PBXBuildFile; fileRef = 301380E117578133005948EE /* GPGMail.iconset */; };
 		3057F2EB1507C9C000FA3C0D /* Special.html in Resources */ = {isa = PBXBuildFile; fileRef = 3057F2E91507C9C000FA3C0D /* Special.html */; };
 		3066C60A17579F5900384E29 /* CertSmallStd_Invalid.png in Resources */ = {isa = PBXBuildFile; fileRef = 3066C60617579F5900384E29 /* CertSmallStd_Invalid.png */; };
 		3066C60B17579F5900384E29 /* CertSmallStd_Invalid@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3066C60717579F5900384E29 /* CertSmallStd_Invalid@2x.png */; };
@@ -155,7 +154,7 @@
 			containerPortal = 1B06268F1746992B00E51308 /* Libmacgpg.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 1B46CFCC161555DF00CF9C5F;
-			remoteInfo = org.gpgtools.Libmacgpg.xpc;
+			remoteInfo = org.gpgtoolz.Libmacgpg.xpc;
 		};
 		1B0626B11746998D00E51308 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -1768,7 +1767,6 @@
 		301380D317567D26005948EE /* CertLargeStd@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "CertLargeStd@2x.png"; sourceTree = "<group>"; };
 		301380DB17569814005948EE /* CertLargeNotTrusted@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "CertLargeNotTrusted@2x.png"; sourceTree = "<group>"; };
 		301380DD17569819005948EE /* CertLargeNotTrusted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = CertLargeNotTrusted.png; sourceTree = "<group>"; };
-		301380E117578133005948EE /* GPGMail.iconset */ = {isa = PBXFileReference; lastKnownFileType = folder.iconset; path = GPGMail.iconset; sourceTree = "<group>"; };
 		30156631214FA6550094E65A /* th */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = th; path = th.lproj/GPGAttachment.strings; sourceTree = "<group>"; };
 		30156636214FA65A0094E65A /* th */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = th; path = th.lproj/SignatureView.strings; sourceTree = "<group>"; };
 		30156637214FA65D0094E65A /* th */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = th; path = th.lproj/GPGMail.strings; sourceTree = "<group>"; };
@@ -2082,7 +2080,7 @@
 				1B0626AA1746998D00E51308 /* Libmacgpg.framework */,
 				1B73B8D81BB20787007D601B /* UnitTests.xctest */,
 				1B0626B21746998D00E51308 /* LeakFinder.app */,
-				1B0626AE1746998D00E51308 /* org.gpgtools.Libmacgpg.xpc */,
+				1B0626AE1746998D00E51308 /* org.gpgtoolz.Libmacgpg.xpc */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -3846,7 +3844,6 @@
 			children = (
 				30E2278E1772057A00AD9A48 /* SymmetricEncryptionOff.pdf */,
 				30E2278F1772057A00AD9A48 /* SymmetricEncryptionOn.pdf */,
-				301380E117578133005948EE /* GPGMail.iconset */,
 				3066C6151757A54900384E29 /* certificate.png */,
 				3066C6161757A54900384E29 /* certificate@2x.png */,
 				301380DD17569819005948EE /* CertLargeNotTrusted.png */,
@@ -3993,10 +3990,10 @@
 			remoteRef = 1B0626A91746998D00E51308 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		1B0626AE1746998D00E51308 /* org.gpgtools.Libmacgpg.xpc */ = {
+		1B0626AE1746998D00E51308 /* org.gpgtoolz.Libmacgpg.xpc */ = {
 			isa = PBXReferenceProxy;
 			fileType = "wrapper.xpc-service";
-			path = org.gpgtools.Libmacgpg.xpc;
+			path = org.gpgtoolz.Libmacgpg.xpc;
 			remoteRef = 1B0626AD1746998D00E51308 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
@@ -4074,7 +4071,6 @@
 				301380D517567D26005948EE /* CertLargeStd@2x.png in Resources */,
 				301380DC17569815005948EE /* CertLargeNotTrusted@2x.png in Resources */,
 				301380DE17569819005948EE /* CertLargeNotTrusted.png in Resources */,
-				301380E217578133005948EE /* GPGMail.iconset in Resources */,
 				3066C60A17579F5900384E29 /* CertSmallStd_Invalid.png in Resources */,
 				3066C60B17579F5900384E29 /* CertSmallStd_Invalid@2x.png in Resources */,
 				3066C60C17579F5900384E29 /* CertSmallStd.png in Resources */,

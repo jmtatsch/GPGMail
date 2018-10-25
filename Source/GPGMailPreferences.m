@@ -1,7 +1,7 @@
 /* GPGMailPreferences.m created by dave on Thu 29-Jun-2000 */
 
 /*
- * Copyright (c) 2000-2011, GPGTools Project Team <gpgtools-devel@lists.gpgtools.org>
+ * Copyright (c) 2000-2011, GPGToolz Project Team <gpgtoolz-devel@lists.gpgtoolz.org>
  * All rights reserved.
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -11,14 +11,14 @@
  *     * Redistributions in binary form must reproduce the above copyright
  *       notice, this list of conditions and the following disclaimer in the
  *       documentation and/or other materials provided with the distribution.
- *     * Neither the name of GPGTools Project Team nor the names of GPGMail
+ *     * Neither the name of GPGToolz Project Team nor the names of GPGMail
  *       contributors may be used to endorse or promote products
  *       derived from this software without specific prior written permission.
  *
- * THIS SOFTWARE IS PROVIDED BY THE GPGTools Project Team ``AS IS'' AND ANY
+ * THIS SOFTWARE IS PROVIDED BY THE GPGToolz Project Team ``AS IS'' AND ANY
  * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE GPGTools Project Team BE LIABLE FOR ANY
+ * DISCLAIMED. IN NO EVENT SHALL THE GPGToolz Project Team BE LIABLE FOR ANY
  * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
  * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
  * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
@@ -83,12 +83,12 @@ NSString *SUScheduledCheckIntervalKey = @"SUScheduledCheckInterval";
 	[pStyle setAlignment:NSRightTextAlignment];
 
 	NSDictionary *attributes = @{NSParagraphStyleAttributeName: pStyle,
-								NSLinkAttributeName: @"https://gpgtools.org/",
+								NSLinkAttributeName: @"https://gpgtoolz.org/",
 								NSForegroundColorAttributeName: [NSColor blueColor],
 								NSFontAttributeName: [NSFont fontWithName:@"Lucida Grande" size:9],
 								NSUnderlineStyleAttributeName: @1};
 
-	return [[NSAttributedString alloc] initWithString:@"https://gpgtools.org" attributes:attributes];
+	return [[NSAttributedString alloc] initWithString:@"https://gpgtoolz.org" attributes:attributes];
 }	
 
 
@@ -125,7 +125,7 @@ NSString *SUScheduledCheckIntervalKey = @"SUScheduledCheckInterval";
 	[[GPGMailBundle sharedInstance] startSupportContractWizard];
 }
 - (IBAction)learnMore:(NSButton *)sender {
-	[[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"https://gpgtools.org/buy-support-plan"]];
+	[[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"https://gpgtoolz.org/buy-support-plan"]];
 }
 
 
@@ -158,20 +158,20 @@ NSString *SUScheduledCheckIntervalKey = @"SUScheduledCheckInterval";
 	
 	if (!success) {
 		// Alternative if GPGPreferences could not be launched.
-		[[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"https://gpgtools.tenderapp.com/"]];
+		[[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"https://gpgtoolz.tenderapp.com/"]];
 	}
 }
 - (IBAction)openDonate:(id)sender {
-    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"https://gpgtools.org/donate"]];
+    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"https://gpgtoolz.org/donate"]];
 }
 - (IBAction)openKnowledgeBase:(id)sender {
-    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"https://gpgtools.tenderapp.com/kb"]];
+    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"https://gpgtoolz.tenderapp.com/kb"]];
 }
 
 
 
 - (IBAction)openGPGStatusHelp:(id)sender {
-    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"https://gpgtools.tenderapp.com/kb/how-to/gpg-status"]];
+    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"https://gpgtoolz.tenderapp.com/kb/how-to/gpg-status"]];
 }
 
 

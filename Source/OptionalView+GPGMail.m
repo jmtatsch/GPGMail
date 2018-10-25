@@ -3,7 +3,7 @@
 //  GPGMail
 //
 //  Created by Lukas Pitschl on 31.07.11.
-//  Copyright 2013 GPGTools. All rights reserved.
+//  Copyright 2013 GPGToolz. All rights reserved.
 //
 
 #import <Libmacgpg/Libmacgpg.h>
